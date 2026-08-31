@@ -5,8 +5,9 @@
 <meta name="viewport" content="width=device-width,initial-scale=1">
 <title>Gedachten, lichaam en emotiewiel</title>
 <style>
+@import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600&display=swap');
 :root{--green:#003c24;--orange:#ff4a00;--brown:#3e281a;--beige:#ddcdba}
-*{box-sizing:border-box;font-family:Arial,Helvetica,sans-serif}
+*{box-sizing:border-box;font-family:"Montserrat",Arial,sans-serif}
 html,body{margin:0;background:#fff!important;color:var(--brown)}
 body{overflow-x:hidden}
 .wrap{max-width:820px;margin:auto;padding:20px 14px 40px;background:#fff!important}
@@ -17,16 +18,16 @@ h2{color:var(--green);font-size:27px;line-height:1.2;margin:0 0 12px}
 textarea{width:100%;min-height:150px;border:2px solid #d8dfda;border-radius:14px;padding:15px;font-size:16px;line-height:1.45;resize:vertical;outline:none;background:#fff}
 textarea:focus{border-color:var(--green)}
 .navrow{display:flex;gap:10px;justify-content:center;flex-wrap:wrap;margin-top:20px}
-.navbtn{border:0;border-radius:12px;padding:12px 18px;font-size:15px;font-weight:800;cursor:pointer}
+.navbtn{border:0;border-radius:12px;padding:12px 18px;font-size:15px;font-weight:600;cursor:pointer}
 .primary{background:var(--green);color:#fff}
 .secondary{background:var(--beige);color:var(--brown)}
 .clear{background:#fff;color:var(--green);border:2px solid var(--green)}
 
 .body-wrap{max-width:330px;margin:12px auto 0;background:#fff}
 #bodySvg{width:100%;height:auto;display:block;cursor:crosshair;background:#fff}
-.body-note{text-align:center;color:var(--green);font-size:14px;font-weight:700;margin:6px 0 0}
+.body-note{text-align:center;color:var(--green);font-size:14px;font-weight:600;margin:6px 0 0}
 
-.toptext{text-align:center;line-height:1.45;font-size:15px;color:var(--green);font-weight:700;margin:0 0 10px}
+.toptext{text-align:center;line-height:1.45;font-size:15px;color:var(--green);font-weight:600;margin:0 0 10px}
 .main,.focus,.focusbox{background:#fff!important;box-shadow:none!important;border:none!important;outline:none!important}
 .main{position:relative;max-width:645px;margin:auto}
 .main img{width:100%;display:block;background:#fff!important;border:0!important;outline:0!important;box-shadow:none!important}
@@ -37,12 +38,12 @@ textarea:focus{border-color:var(--green)}
 .focusbox img{width:100%;display:block;background:#fff!important;border:0!important;outline:0!important;box-shadow:none!important}
 .sub{position:absolute;width:20%;height:17%;transform:translate(-50%,-50%);border:0;background:transparent;cursor:pointer;border-radius:18px}
 .actions{display:flex;justify-content:center;margin-top:8px}
-.ui{border:0;border-radius:12px;padding:12px 16px;font-weight:800;font-size:15px;cursor:pointer}
+.ui{border:0;border-radius:12px;padding:12px 16px;font-weight:600;font-size:15px;cursor:pointer}
 .back{background:var(--green);color:#fff}
 .reset{background:var(--orange);color:#fff;margin-top:14px}
 .result{display:none;max-width:645px;margin:14px auto 0;background:#f7fff5;border:2px solid #d7ead3;border-radius:16px;padding:18px}
 .result.show{display:block}
-.result .crumb{font-size:14px;font-weight:700;color:var(--green);margin-bottom:5px}
+.result .crumb{font-size:14px;font-weight:600;color:var(--green);margin-bottom:5px}
 .result h2{margin:0;color:var(--green);font-size:24px}
 .result p{font-size:16px;line-height:1.5;margin:10px 0 0}
 .reflect{padding-top:12px;border-top:1px solid #d7ead3}
