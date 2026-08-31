@@ -2,48 +2,185 @@
 <html lang="nl">
 <head>
 <meta charset="utf-8">
-<meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Teamcheck</title>
+
 <style>
-:root{--green:#003c24;--beige:#ddcdba;--brown:#3e281a;--orange:#ff4a00;--mint:#b8ffaf;--cyan:#96f0ff}
-*{box-sizing:border-box}
-body{margin:0;background:#ffffff;color:var(--brown);font-family:Arial,Helvetica,sans-serif}
-.wrap{max-width:900px;margin:auto;padding:24px}
-.card{background:white;border-radius:24px;padding:30px;box-shadow:0 10px 30px rgba(62,40,26,.08)}
-h1{color:var(--green);margin:0 0 8px;font-size:38px}
-.intro{font-size:18px;line-height:1.5;margin:0 0 24px}
-.item{background:#fffaf5;border-radius:18px;padding:18px;margin:12px 0}
-.item h2{font-size:19px;color:var(--green);margin:0 0 5px}
-.item p{margin:0 0 13px;line-height:1.4}
-.rating{display:flex;gap:9px;flex-wrap:wrap}
-.rate{
- width:45px;height:45px;border-radius:50%;border:2px solid var(--green);
- background:white;color:var(--green);font-weight:800;font-size:17px;cursor:pointer
+:root {
+  --green:#003c24;
+  --beige:#ddcdba;
+  --brown:#3e281a;
+  --orange:#ff4a00;
+  --mint:#b8ffaf;
 }
-.rate:hover,.rate.active{background:var(--green);color:white}
-label{display:block;color:var(--green);font-weight:800;margin:20px 0 7px}
-textarea{
- width:100%;min-height:85px;border:2px solid var(--beige);border-radius:14px;
- padding:13px;font:inherit;resize:vertical
+
+* {
+  box-sizing:border-box;
 }
-button.action{
- border:0;border-radius:13px;padding:14px 18px;font-weight:800;font-size:16px;
- cursor:pointer;margin-top:18px;background:var(--orange);color:white
+
+body {
+  margin:0;
+  background:#ffffff;
+  color:var(--brown);
+  font-family:Arial, Helvetica, sans-serif;
 }
-#result{display:none;background:var(--mint);border-radius:18px;padding:20px;margin-top:22px}
-#result h2{color:var(--green);margin-top:0}
-.result-row{margin:8px 0;font-weight:700}
-.insight{margin-top:15px;line-height:1.5}
-.copy{background:var(--green)!important;margin-right:8px}
-#copymsg{font-weight:700;color:var(--green);margin-top:10px;display:none}
-.note{font-size:14px;opacity:.75;margin-top:14px}
-@media(max-width:600px){.card{padding:20px}.wrap{padding:12px}h1{font-size:30px}}
+
+.wrap {
+  max-width:900px;
+  margin:auto;
+  padding:10px 24px 0;
+}
+
+.card {
+  background:white;
+  border-radius:24px;
+  padding:24px;
+}
+
+h1 {
+  color:var(--green);
+  margin:0 0 8px;
+  font-size:38px;
+}
+
+.intro {
+  font-size:18px;
+  line-height:1.5;
+  margin:0 0 24px;
+}
+
+.item {
+  background:#fffaf5;
+  border-radius:18px;
+  padding:14px 16px;
+  margin:9px 0;
+}
+
+.item h2 {
+  font-size:19px;
+  color:var(--green);
+  margin:0 0 5px;
+}
+
+.item p {
+  margin:0 0 13px;
+  line-height:1.4;
+}
+
+.rating {
+  display:flex;
+  gap:9px;
+  flex-wrap:wrap;
+}
+
+.rate {
+  width:45px;
+  height:45px;
+  border-radius:50%;
+  border:2px solid var(--green);
+  background:white;
+  color:var(--green);
+  font-weight:800;
+  font-size:17px;
+  cursor:pointer;
+}
+
+.rate:hover,
+.rate.active {
+  background:var(--green);
+  color:white;
+}
+
+label {
+  display:block;
+  color:var(--green);
+  font-weight:800;
+  margin:14px 0 6px;
+}
+
+textarea {
+  width:100%;
+  min-height:68px;
+  border:2px solid var(--beige);
+  border-radius:14px;
+  padding:13px;
+  font:inherit;
+  resize:vertical;
+}
+
+button.action {
+  border:0;
+  border-radius:13px;
+  padding:14px 18px;
+  font-weight:800;
+  font-size:16px;
+  cursor:pointer;
+  margin-top:18px;
+  background:var(--orange);
+  color:white;
+}
+
+#result {
+  display:none;
+  background:var(--mint);
+  border-radius:18px;
+  padding:16px;
+  margin-top:16px;
+}
+
+#result h2 {
+  color:var(--green);
+  margin-top:0;
+}
+
+.result-row {
+  margin:5px 0;
+  font-weight:700;
+}
+
+.insight {
+  margin-top:10px;
+  line-height:1.4;
+}
+
+.copy {
+  background:var(--green) !important;
+  margin-right:8px;
+}
+
+#copymsg {
+  font-weight:700;
+  color:var(--green);
+  margin-top:10px;
+  display:none;
+}
+
+.note {
+  font-size:14px;
+  opacity:.75;
+  margin:10px 0 0;
+}
+
+@media(max-width:600px) {
+  .card {padding:20px;}
+  .wrap {padding:12px;}
+  h1 {font-size:30px;}
+}
 </style>
 </head>
+
 <body>
-<div class="wrap"><div class="card">
+
+<div class="wrap">
+<div class="card">
+
 <h1>Teamcheck</h1>
-<p class="intro">Hoe staat jullie team ervoor? Geef je team op elk onderdeel een score van <strong>1 tot 5</strong>. Er is geen goed of fout, en het hoeft niet perfect. Het gaat om bewust worden en onderzoeken waar groei nog mogelijk is!</p>
+
+<p class="intro">
+Hoe staat jullie team ervoor? Geef je team op elk onderdeel een score van
+<strong>1 tot 5</strong>. Er is geen goed of fout, en het hoeft niet perfect.
+Het gaat om bewust worden en onderzoeken waar groei nog mogelijk is!
+</p>
 
 <div id="ratings"></div>
 
@@ -53,88 +190,205 @@ button.action{
 <label for="work">Hier willen we als team aan werken:</label>
 <textarea id="work" placeholder="Wat willen jullie verbeteren?"></textarea>
 
-<button class="action" onclick="showResult()">Bekijk Teamcheck</button>
+<button class="action" onclick="showResult()">
+Bekijk Teamcheck
+</button>
 
 <div id="result">
+
 <h2>Jullie resultaat</h2>
+
 <div id="rows"></div>
+
 <div class="insight" id="insight"></div>
-<button class="action copy" onclick="copyCheck()">Kopieer Teamcheck</button>
-<div id="copymsg">✓ Gekopieerd! Plak jullie Teamcheck nu in de Huddle-feed.</div>
+
+<button class="action copy" onclick="copyCheck()">
+Kopieer Teamcheck
+</button>
+
+<div id="copymsg">
+✓ Gekopieerd! Plak jullie Teamcheck nu in de Huddle-feed.
 </div>
-<p class="note">1 = hier kunnen we nog flink in groeien · 5 = hier zijn we heel sterk in</p>
-</div></div>
+
+</div>
+
+<p class="note">
+1 = hier kunnen we nog flink in groeien · 5 = hier zijn we heel sterk in
+</p>
+
+</div>
+</div>
 
 <script>
-const data=[
- ["🎯","Motivatie","Iedereen weet waar jullie het voor doen en wil bijdragen."],
- ["🤝","Vertrouwen","Jullie kunnen op elkaar rekenen en eerlijk zijn."],
- ["⭐","Waardering","Jullie zien en benoemen wat iedereen bijdraagt."],
- ["✓","Verantwoordelijkheid","Het is duidelijk wie wat doet en iedereen pakt taken op."]
-];
-const scores={};
-const ratings=document.getElementById("ratings");
 
-data.forEach(([icon,name,desc])=>{
- const item=document.createElement("div"); item.className="item";
- item.innerHTML=`<h2>${icon} ${name}</h2><p>${desc}</p><div class="rating"></div>`;
- const r=item.querySelector(".rating");
- for(let i=1;i<=5;i++){
-   const b=document.createElement("button"); b.className="rate"; b.textContent=i;
-   b.onclick=()=>{
-     scores[name]=i;
-     [...r.children].forEach(x=>x.classList.toggle("active",Number(x.textContent)<=i));
-   };
-   r.appendChild(b);
- }
- ratings.appendChild(item);
+const data = [
+  ["🎯","Motivatie",
+   "Iedereen weet waar jullie het voor doen en wil bijdragen."],
+
+  ["🤝","Vertrouwen",
+   "Jullie kunnen op elkaar rekenen en eerlijk zijn."],
+
+  ["⭐","Waardering",
+   "Jullie zien en benoemen wat iedereen bijdraagt."],
+
+  ["✓","Verantwoordelijkheid",
+   "Het is duidelijk wie wat doet en iedereen pakt taken op."]
+];
+
+const scores = {};
+
+const ratings = document.getElementById("ratings");
+
+data.forEach(([icon,name,desc]) => {
+
+  const item = document.createElement("div");
+  item.className = "item";
+
+  item.innerHTML =
+  `<h2>${icon} ${name}</h2>
+   <p>${desc}</p>
+   <div class="rating"></div>`;
+
+  const r = item.querySelector(".rating");
+
+  for(let i=1; i<=5; i++){
+
+    const b = document.createElement("button");
+
+    b.className = "rate";
+    b.textContent = i;
+
+    b.onclick = () => {
+
+      scores[name] = i;
+
+      [...r.children].forEach(x =>
+        x.classList.toggle(
+          "active",
+          Number(x.textContent) <= i
+        )
+      );
+    };
+
+    r.appendChild(b);
+  }
+
+  ratings.appendChild(item);
 });
 
-function stars(n){return "★".repeat(n)+"☆".repeat(5-n)}
-function showResult(){
- if(Object.keys(scores).length<4){alert("Geef eerst alle vier de onderdelen een score.");return}
- const rows=document.getElementById("rows"); rows.innerHTML="";
- data.forEach(([icon,name])=>{
-   rows.innerHTML+=`<div class="result-row">${icon} ${name}: ${stars(scores[name])} &nbsp; ${scores[name]}/5</div>`;
- });
- const vals=data.map(x=>[x[1],scores[x[1]]]);
- const max=Math.max(...vals.map(x=>x[1])), min=Math.min(...vals.map(x=>x[1]));
- const strong=vals.filter(x=>x[1]===max).map(x=>x[0]).join(" en ");
- const grow=vals.filter(x=>x[1]===min).map(x=>x[0]).join(" en ");
- document.getElementById("insight").innerHTML=`<strong>Jullie sterkste score:</strong> ${strong}<br><strong>Hier ligt de meeste ruimte om te groeien:</strong> ${grow}`;
- document.getElementById("result").style.display="block";
- document.getElementById("result").scrollIntoView({behavior:"smooth",block:"nearest"});
-}
-function textCheck(){
- let t="TEAMCHECK\n\n";
- data.forEach(([icon,name])=>t+=`${icon} ${name}: ${scores[name]}/5\n`);
- t+=`\nHier zijn we al sterk in:\n${document.getElementById("strong").value || "..."}\n`;
- t+=`\nHier willen we als team aan werken:\n${document.getElementById("work").value || "..."}\n`;
- return t;
-}
-async function copyCheck(){
- try{
-   await navigator.clipboard.writeText(textCheck());
-   document.getElementById("copymsg").style.display="block";
- }catch(e){
-   const ta=document.createElement("textarea"); ta.value=textCheck(); document.body.appendChild(ta);
-   ta.select(); document.execCommand("copy"); ta.remove();
-   document.getElementById("copymsg").style.display="block";
- }
-}
-</script>
 
-<script>
-function sendHeight(){
-  const height = Math.max(
-    document.body.scrollHeight,
-    document.documentElement.scrollHeight
-  );
-  window.parent.postMessage({type:'LYL_IFRAME_HEIGHT', height:height}, '*');
+function stars(n){
+  return "★".repeat(n) + "☆".repeat(5-n);
 }
-window.addEventListener('load', sendHeight);
-window.addEventListener('resize', sendHeight);
-new ResizeObserver(sendHeight).observe(document.body);
+
+
+function showResult(){
+
+  if(Object.keys(scores).length < 4){
+
+    alert("Geef eerst alle vier de onderdelen een score.");
+    return;
+  }
+
+  const rows = document.getElementById("rows");
+
+  rows.innerHTML = "";
+
+  data.forEach(([icon,name]) => {
+
+    rows.innerHTML +=
+    `<div class="result-row">
+      ${icon} ${name}: ${stars(scores[name])} &nbsp; ${scores[name]}/5
+    </div>`;
+  });
+
+
+  const vals =
+    data.map(x => [x[1], scores[x[1]]]);
+
+  const max =
+    Math.max(...vals.map(x => x[1]));
+
+  const min =
+    Math.min(...vals.map(x => x[1]));
+
+
+  const strong =
+    vals
+      .filter(x => x[1] === max)
+      .map(x => x[0])
+      .join(" en ");
+
+
+  const grow =
+    vals
+      .filter(x => x[1] === min)
+      .map(x => x[0])
+      .join(" en ");
+
+
+  document.getElementById("insight").innerHTML =
+  `<strong>Jullie sterkste score:</strong> ${strong}<br>
+   <strong>Hier ligt de meeste ruimte om te groeien:</strong> ${grow}`;
+
+
+  document.getElementById("result").style.display = "block";
+
+  document.getElementById("result").scrollIntoView({
+    behavior:"smooth",
+    block:"nearest"
+  });
+}
+
+
+function textCheck(){
+
+  let t = "TEAMCHECK\\n\\n";
+
+  data.forEach(([icon,name]) =>
+    t += `${icon} ${name}: ${scores[name]}/5\\n`
+  );
+
+  t +=
+  `\\nHier zijn we al sterk in:\\n${
+    document.getElementById("strong").value || "..."
+  }\\n`;
+
+  t +=
+  `\\nHier willen we als team aan werken:\\n${
+    document.getElementById("work").value || "..."
+  }\\n`;
+
+  return t;
+}
+
+
+async function copyCheck(){
+
+  try {
+
+    await navigator.clipboard.writeText(textCheck());
+
+    document.getElementById("copymsg").style.display = "block";
+
+  } catch(e) {
+
+    const ta = document.createElement("textarea");
+
+    ta.value = textCheck();
+
+    document.body.appendChild(ta);
+
+    ta.select();
+
+    document.execCommand("copy");
+
+    ta.remove();
+
+    document.getElementById("copymsg").style.display = "block";
+  }
+}
+
 </script>
 
 </body>
