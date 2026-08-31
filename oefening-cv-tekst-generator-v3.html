@@ -1,0 +1,113 @@
+<!doctype html>
+<html lang="nl">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Maak jouw cv-tekst</title>
+<style>
+@import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600&display=swap');
+:root{--green:#003c24;--brown:#3e281a;--orange:#ff4a00;--cyan:#96f0ff;--mint:#b8ffaf}
+*{box-sizing:border-box}
+html,body{margin:0;background:#fff;color:var(--brown);font-family:"Montserrat",Arial,sans-serif}
+.wrap{max-width:1000px;margin:auto;padding:12px}
+.steps{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:12px}
+.card{border-radius:18px;padding:18px;min-width:0}
+.card:nth-child(1){background:#efffed}.card:nth-child(2){background:#eefcff}.card:nth-child(3){background:#fff1eb}
+.num{width:34px;height:34px;border-radius:50%;background:var(--green);color:#fff;display:flex;align-items:center;justify-content:center;font-size:14px;font-weight:600;margin-bottom:11px}
+h3{margin:0 0 6px;color:var(--green);font-size:17px;font-weight:600}
+.card p{margin:0 0 11px;font-size:12px;line-height:1.45}
+textarea{width:100%;min-height:88px;resize:vertical;border:1.5px solid rgba(0,60,36,.25);border-radius:12px;background:#fff;padding:11px;font:400 13px/1.45 "Montserrat",Arial,sans-serif;color:var(--brown);outline:none}
+textarea:focus{border-color:var(--orange)}
+.action{text-align:center;margin:15px 0}
+button{border:0;border-radius:999px;background:var(--green);color:#fff;padding:12px 20px;font:600 13px "Montserrat",Arial,sans-serif;cursor:pointer}
+button:hover{opacity:.92}
+.result{display:none;margin-top:4px;border:2px solid var(--green);border-radius:18px;padding:20px;background:#fff}
+.result.show{display:block}
+.result small{display:block;color:var(--orange);font-weight:600;font-size:10px;text-transform:uppercase;letter-spacing:.05em;margin-bottom:5px}
+.cvtitle{font-weight:600;color:var(--green);font-size:14px;margin:11px 0 4px}
+.cvtext{background:#f7f8f5;border-radius:12px;padding:14px;font-size:13px;line-height:1.6;margin:0;white-space:pre-wrap}
+.copyrow{display:flex;align-items:center;gap:10px;margin-top:12px;flex-wrap:wrap}
+.copy{background:var(--orange)}
+.status{font-size:11px;color:var(--green);font-weight:600}
+.error{display:none;text-align:center;color:var(--orange);font-size:12px;font-weight:600;margin-top:9px}
+.error.show{display:block}
+@media(max-width:650px){.steps{grid-template-columns:1fr}.card{padding:15px}textarea{min-height:72px}}
+</style>
+</head>
+<body>
+<div class="wrap">
+ <div class="steps">
+  <section class="card">
+   <div class="num">1</div>
+   <h3>Wat heb jij gedaan?</h3>
+   <p>Maak de zin af: <strong>Tijdens Lead Your Life heb ik...</strong></p>
+   <textarea id="role" placeholder="Bijvoorbeeld: geholpen met de planning en promotie van onze activiteit."></textarea>
+  </section>
+  <section class="card">
+   <div class="num">2</div>
+   <h3>Welke skills gebruikte je?</h3>
+   <p>Maak de zin af: <strong>Hierbij heb ik geoefend met...</strong></p>
+   <textarea id="skills" placeholder="Bijvoorbeeld: samenwerken, plannen en presenteren."></textarea>
+  </section>
+  <section class="card">
+   <div class="num">3</div>
+   <h3>Wat heb je bereikt?</h3>
+   <p>Maak de zin af: <strong>Ik ben er trots op dat...</strong></p>
+   <textarea id="resultInput" placeholder="Bijvoorbeeld: we samen een activiteit voor jongeren hebben neergezet."></textarea>
+  </section>
+ </div>
+
+ <div style="max-width:760px;margin:16px auto 8px;text-align:center;font-size:12px;line-height:1.55;color:#3e281a;">
+<strong style="color:#003c24;">We maken alvast een voorzetje voor je.</strong>
+Op basis van je antwoorden krijg je een voorbeeldtekst voor op je cv. Daarna kun je de tekst <strong>kopiëren en zelf aanpassen</strong>, zodat hij echt bij jou past.
+</div>
+<div class="action"><button id="make" type="button">Maak mijn cv-tekst</button></div>
+ <div class="error" id="error">Vul eerst alle drie de vragen in.</div>
+
+ <section class="result" id="resultBox" aria-live="polite">
+   <small>Klaar voor je cv</small>
+   <h3>Jouw Lead Your Life-ervaring</h3>
+   <div class="cvtitle">Projectdeelnemer – Lead Your Life</div>
+   <p class="cvtext" id="cvtext"></p>
+   <div class="copyrow">
+     <button class="copy" id="copy" type="button">Kopieer tekst</button>
+     <span class="status" id="status"></span>
+   </div>
+ </section>
+</div>
+<script>
+(function(){
+ const role=document.getElementById("role"), skills=document.getElementById("skills"),
+ resultInput=document.getElementById("resultInput"), make=document.getElementById("make"),
+ resultBox=document.getElementById("resultBox"), cvtext=document.getElementById("cvtext"),
+ error=document.getElementById("error"), copy=document.getElementById("copy"), status=document.getElementById("status");
+
+ function clean(s){ return s.trim().replace(/[.!?]+$/,""); }
+ function lowerFirst(s){ return s ? s.charAt(0).toLowerCase()+s.slice(1) : s; }
+
+ make.addEventListener("click",function(){
+   const r=clean(role.value), s=clean(skills.value), o=clean(resultInput.value);
+   if(!r || !s || !o){ error.classList.add("show"); resultBox.classList.remove("show"); return; }
+   error.classList.remove("show");
+   const text="Tijdens Lead Your Life heb ik "+lowerFirst(r)+". Hierbij heb ik geoefend met "+lowerFirst(s)+". Ik ben er trots op dat "+lowerFirst(o)+".";
+   cvtext.textContent=text;
+   resultBox.classList.add("show");
+   status.textContent="";
+ });
+
+ copy.addEventListener("click",async function(){
+   const full="Projectdeelnemer – Lead Your Life\n"+cvtext.textContent;
+   try{
+     await navigator.clipboard.writeText(full);
+     status.textContent="Gekopieerd!";
+   }catch(e){
+     const ta=document.createElement("textarea");
+     ta.value=full; document.body.appendChild(ta); ta.select();
+     try{document.execCommand("copy");status.textContent="Gekopieerd!";}catch(x){status.textContent="Selecteer de tekst en kopieer hem.";}
+     ta.remove();
+   }
+ });
+})();
+</script>
+</body>
+</html>
