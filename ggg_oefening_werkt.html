@@ -1,0 +1,189 @@
+<!doctype html>
+<html lang="nl">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Gedachte, Gevoel of Gedrag?</title>
+<style>
+:root{
+  --green:#003c24;
+  --beige:#ddcdba;
+  --brown:#3e281a;
+  --orange:#ff4a00;
+  --mint:#b8ffaf;
+  --white:#ffffff;
+  --bg:#f7f3ee;
+}
+*{box-sizing:border-box}
+body{
+  margin:0;
+  font-family:Arial,Helvetica,sans-serif;
+  background:var(--bg);
+  color:var(--brown);
+}
+.wrap{max-width:900px;margin:0 auto;padding:24px}
+.panel{
+  background:#fff;
+  border-radius:22px;
+  padding:28px;
+  box-shadow:0 10px 30px rgba(62,40,26,.08);
+}
+h1{margin:0 0 8px;color:var(--green);font-size:36px}
+p{font-size:18px;line-height:1.5}
+.situation{
+  background:var(--beige);
+  padding:18px;
+  border-radius:16px;
+  font-weight:700;
+  margin:20px 0;
+}
+.options{
+  display:grid;
+  gap:12px;
+  margin:20px 0 28px;
+}
+.option{
+  border:2px solid var(--green);
+  background:white;
+  color:var(--green);
+  border-radius:14px;
+  padding:15px 16px;
+  font-size:17px;
+  font-weight:700;
+  cursor:pointer;
+  text-align:left;
+}
+.option:hover{background:#f3fbf5}
+.option.selected{
+  background:var(--green);
+  color:white;
+}
+.targets{
+  display:grid;
+  grid-template-columns:repeat(3,1fr);
+  gap:14px;
+}
+.target{
+  border:0;
+  border-radius:18px;
+  padding:22px 12px;
+  min-height:110px;
+  background:#fffaf5;
+  box-shadow:inset 0 0 0 2px #d8cbbd;
+  cursor:pointer;
+  font-weight:700;
+  color:var(--green);
+  font-size:18px;
+}
+.target.filled{
+  background:var(--mint);
+  box-shadow:none;
+}
+.feedback{
+  margin-top:22px;
+  border-radius:14px;
+  padding:16px;
+  display:none;
+  font-weight:700;
+}
+.feedback.show{display:block}
+.feedback.good{background:var(--mint);color:var(--green)}
+.feedback.bad{background:#ffe3d8;color:#8b2f0d}
+.next{
+  margin-top:16px;
+  display:none;
+  border:0;
+  background:var(--orange);
+  color:white;
+  border-radius:12px;
+  padding:13px 18px;
+  font-weight:700;
+  cursor:pointer;
+}
+.small{font-size:14px;color:#7a685a}
+@media(max-width:700px){
+  .targets{grid-template-columns:1fr}
+  h1{font-size:30px}
+}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <div class="panel">
+    <h1>Gedachte, gevoel of gedrag?</h1>
+    <p>Kies eerst een kaartje. Klik daarna op de plek waar het volgens jou hoort.</p>
+
+    <div class="situation">Situatie: Je stuurt iets in de groepsapp, maar niemand reageert.</div>
+
+    <div class="options" id="options">
+      <button class="option" data-type="gevoel">Onzeker</button>
+      <button class="option" data-type="gedrag">Ik verwijder mijn bericht.</button>
+      <button class="option" data-type="gedachte">Ze vinden mijn idee vast stom.</button>
+    </div>
+
+    <div class="targets">
+      <button class="target" data-type="gedachte">🧠 Gedachte<br><span class="small">Wat gaat er door je hoofd?</span></button>
+      <button class="target" data-type="gevoel">❤️ Gevoel<br><span class="small">Wat voel je?</span></button>
+      <button class="target" data-type="gedrag">👟 Gedrag<br><span class="small">Wat doe je?</span></button>
+    </div>
+
+    <div id="feedback" class="feedback"></div>
+    <button class="next" id="reset">Opnieuw</button>
+  </div>
+</div>
+
+<script>
+let selected = null;
+let completed = 0;
+
+const options = [...document.querySelectorAll('.option')];
+const targets = [...document.querySelectorAll('.target')];
+const feedback = document.getElementById('feedback');
+const reset = document.getElementById('reset');
+
+options.forEach(btn=>{
+  btn.addEventListener('click', ()=>{
+    if(btn.disabled) return;
+    options.forEach(o=>o.classList.remove('selected'));
+    btn.classList.add('selected');
+    selected = btn;
+    feedback.className='feedback';
+    feedback.textContent='';
+  });
+});
+
+targets.forEach(target=>{
+  target.addEventListener('click', ()=>{
+    if(!selected){
+      feedback.className='feedback show bad';
+      feedback.textContent='Kies eerst een kaartje.';
+      return;
+    }
+    if(selected.dataset.type === target.dataset.type){
+      target.classList.add('filled');
+      target.innerHTML = target.innerHTML.split('<br>')[0] + '<br><span class="small">✓ ' + selected.textContent + '</span>';
+      selected.disabled = true;
+      selected.style.opacity = '.45';
+      selected.classList.remove('selected');
+      selected = null;
+      completed++;
+
+      if(completed === 3){
+        feedback.className='feedback show good';
+        feedback.textContent='✓ Lekker bezig! Je gedachte beïnvloedt hoe je je voelt. En dat gevoel heeft weer invloed op wat je doet.';
+        reset.style.display='inline-block';
+      } else {
+        feedback.className='feedback show good';
+        feedback.textContent='Goed! Kies nu het volgende kaartje.';
+      }
+    } else {
+      feedback.className='feedback show bad';
+      feedback.textContent='Nog niet helemaal. Probeer een andere plek.';
+    }
+  });
+});
+
+reset.addEventListener('click', ()=>location.reload());
+</script>
+</body>
+</html>
