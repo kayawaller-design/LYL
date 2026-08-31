@@ -123,5 +123,19 @@ async function copyCheck(){
  }
 }
 </script>
+
+<script>
+function sendHeight(){
+  const height = Math.max(
+    document.body.scrollHeight,
+    document.documentElement.scrollHeight
+  );
+  window.parent.postMessage({type:'LYL_IFRAME_HEIGHT', height:height}, '*');
+}
+window.addEventListener('load', sendHeight);
+window.addEventListener('resize', sendHeight);
+new ResizeObserver(sendHeight).observe(document.body);
+</script>
+
 </body>
 </html>
