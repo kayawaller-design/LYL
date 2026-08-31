@@ -3,7 +3,6 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Teamcheck</title>
 
 <style>
 :root {
@@ -18,35 +17,25 @@
   box-sizing:border-box;
 }
 
-body {
+html, body {
   margin:0;
+  padding:0;
   background:#ffffff;
   color:var(--brown);
   font-family:Arial, Helvetica, sans-serif;
 }
 
 .wrap {
+  width:100%;
   max-width:900px;
-  margin:auto;
-  padding:10px 24px 0;
-}
-
-.card {
-  background:white;
-  border-radius:24px;
-  padding:24px;
-}
-
-h1 {
-  color:var(--green);
-  margin:0 0 8px;
-  font-size:38px;
+  margin:0 auto;
+  padding:0 20px 20px;
 }
 
 .intro {
   font-size:18px;
   line-height:1.5;
-  margin:0 0 24px;
+  margin:0 0 18px;
 }
 
 .item {
@@ -63,7 +52,7 @@ h1 {
 }
 
 .item p {
-  margin:0 0 13px;
+  margin:0 0 12px;
   line-height:1.4;
 }
 
@@ -78,7 +67,7 @@ h1 {
   height:45px;
   border-radius:50%;
   border:2px solid var(--green);
-  background:white;
+  background:#ffffff;
   color:var(--green);
   font-weight:800;
   font-size:17px;
@@ -88,7 +77,7 @@ h1 {
 .rate:hover,
 .rate.active {
   background:var(--green);
-  color:white;
+  color:#ffffff;
 }
 
 label {
@@ -108,16 +97,16 @@ textarea {
   resize:vertical;
 }
 
-button.action {
+.action {
   border:0;
   border-radius:13px;
   padding:14px 18px;
   font-weight:800;
   font-size:16px;
   cursor:pointer;
-  margin-top:18px;
+  margin-top:16px;
   background:var(--orange);
-  color:white;
+  color:#ffffff;
 }
 
 #result {
@@ -130,7 +119,7 @@ button.action {
 
 #result h2 {
   color:var(--green);
-  margin-top:0;
+  margin:0 0 12px;
 }
 
 .result-row {
@@ -144,15 +133,14 @@ button.action {
 }
 
 .copy {
-  background:var(--green) !important;
-  margin-right:8px;
+  background:var(--green);
 }
 
 #copymsg {
+  display:none;
   font-weight:700;
   color:var(--green);
   margin-top:10px;
-  display:none;
 }
 
 .note {
@@ -162,9 +150,9 @@ button.action {
 }
 
 @media(max-width:600px) {
-  .card {padding:20px;}
-  .wrap {padding:12px;}
-  h1 {font-size:30px;}
+  .wrap {
+    padding:0 12px 15px;
+  }
 }
 </style>
 </head>
@@ -172,9 +160,6 @@ button.action {
 <body>
 
 <div class="wrap">
-<div class="card">
-
-
 
 <p class="intro">
 Hoe staat jullie team ervoor? Geef je team op elk onderdeel een score van
@@ -217,7 +202,6 @@ Kopieer Teamcheck
 </p>
 
 </div>
-</div>
 
 <script>
 
@@ -244,149 +228,134 @@ data.forEach(([icon,name,desc]) => {
   const item = document.createElement("div");
   item.className = "item";
 
-  item.innerHTML =
-  `<h2>${icon} ${name}</h2>
-   <p>${desc}</p>
-   <div class="rating"></div>`;
+  item.innerHTML = `
+    <h2>${icon} ${name}</h2>
+    <p>${desc}</p>
+    <div class="rating"></div>
+  `;
 
-  const r = item.querySelector(".rating");
+  const rating = item.querySelector(".rating");
 
-  for(let i=1; i<=5; i++){
+  for(let i = 1; i <= 5; i++) {
 
-    const b = document.createElement("button");
+    const button = document.createElement("button");
 
-    b.className = "rate";
-    b.textContent = i;
+    button.className = "rate";
+    button.textContent = i;
 
-    b.onclick = () => {
+    button.onclick = () => {
 
       scores[name] = i;
 
-      [...r.children].forEach(x =>
+      [...rating.children].forEach(x => {
         x.classList.toggle(
           "active",
           Number(x.textContent) <= i
-        )
-      );
+        );
+      });
+
     };
 
-    r.appendChild(b);
+    rating.appendChild(button);
   }
 
   ratings.appendChild(item);
 });
 
 
-function stars(n){
+function stars(n) {
   return "★".repeat(n) + "☆".repeat(5-n);
 }
 
 
-function showResult(){
+function showResult() {
 
-  if(Object.keys(scores).length < 4){
-
+  if(Object.keys(scores).length < 4) {
     alert("Geef eerst alle vier de onderdelen een score.");
     return;
   }
 
   const rows = document.getElementById("rows");
-
   rows.innerHTML = "";
 
   data.forEach(([icon,name]) => {
 
-    rows.innerHTML +=
-    `<div class="result-row">
-      ${icon} ${name}: ${stars(scores[name])} &nbsp; ${scores[name]}/5
-    </div>`;
+    rows.innerHTML += `
+      <div class="result-row">
+        ${icon} ${name}: ${stars(scores[name])} ${scores[name]}/5
+      </div>
+    `;
+
   });
 
 
-  const vals =
-    data.map(x => [x[1], scores[x[1]]]);
+  const values = data.map(x => [x[1], scores[x[1]]]);
 
-  const max =
-    Math.max(...vals.map(x => x[1]));
+  const highest = Math.max(...values.map(x => x[1]));
+  const lowest = Math.min(...values.map(x => x[1]));
 
-  const min =
-    Math.min(...vals.map(x => x[1]));
+  const strongest = values
+    .filter(x => x[1] === highest)
+    .map(x => x[0])
+    .join(" en ");
 
-
-  const strong =
-    vals
-      .filter(x => x[1] === max)
-      .map(x => x[0])
-      .join(" en ");
-
-
-  const grow =
-    vals
-      .filter(x => x[1] === min)
-      .map(x => x[0])
-      .join(" en ");
+  const growth = values
+    .filter(x => x[1] === lowest)
+    .map(x => x[0])
+    .join(" en ");
 
 
-  document.getElementById("insight").innerHTML =
-  `<strong>Jullie sterkste score:</strong> ${strong}<br>
-   <strong>Hier ligt de meeste ruimte om te groeien:</strong> ${grow}`;
-
+  document.getElementById("insight").innerHTML = `
+    <strong>Jullie sterkste score:</strong> ${strongest}<br>
+    <strong>Hier ligt de meeste ruimte om te groeien:</strong> ${growth}
+  `;
 
   document.getElementById("result").style.display = "block";
-
-  document.getElementById("result").scrollIntoView({
-    behavior:"smooth",
-    block:"nearest"
-  });
 }
 
 
-function textCheck(){
+function textCheck() {
 
-  let t = "TEAMCHECK\\n\\n";
+  let text = "TEAMCHECK\\n\\n";
 
-  data.forEach(([icon,name]) =>
-    t += `${icon} ${name}: ${scores[name]}/5\\n`
-  );
+  data.forEach(([icon,name]) => {
+    text += `${icon} ${name}: ${scores[name]}/5\\n`;
+  });
 
-  t +=
-  `\\nHier zijn we al sterk in:\\n${
+  text += `\\nHier zijn we al sterk in:\\n${
     document.getElementById("strong").value || "..."
   }\\n`;
 
-  t +=
-  `\\nHier willen we als team aan werken:\\n${
+  text += `\\nHier willen we als team aan werken:\\n${
     document.getElementById("work").value || "..."
   }\\n`;
 
-  return t;
+  return text;
 }
 
 
-async function copyCheck(){
+async function copyCheck() {
 
   try {
 
     await navigator.clipboard.writeText(textCheck());
 
-    document.getElementById("copymsg").style.display = "block";
-
   } catch(e) {
 
-    const ta = document.createElement("textarea");
+    const textarea = document.createElement("textarea");
 
-    ta.value = textCheck();
+    textarea.value = textCheck();
 
-    document.body.appendChild(ta);
+    document.body.appendChild(textarea);
 
-    ta.select();
+    textarea.select();
 
     document.execCommand("copy");
 
-    ta.remove();
-
-    document.getElementById("copymsg").style.display = "block";
+    textarea.remove();
   }
+
+  document.getElementById("copymsg").style.display = "block";
 }
 
 </script>
