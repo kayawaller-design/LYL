@@ -1,0 +1,54 @@
+<!doctype html>
+<html lang="nl">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Don't forget!</title>
+<style>
+@import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600&display=swap');
+*{box-sizing:border-box}
+html,body{margin:0;background:#fff;font-family:"Montserrat",Arial,sans-serif;color:#3e281a}
+.wrap{width:100%;padding:12px 18px;background:#fff}
+.tip{
+ max-width:900px;margin:auto;display:flex;align-items:center;gap:18px;
+ padding:17px 20px;background:#fff;border-left:5px solid #ff4a00;
+ border-radius:0 14px 14px 0
+}
+.icon{
+ flex:0 0 52px;width:52px;height:52px;border-radius:50%;
+ background:#fff1eb;display:flex;align-items:center;justify-content:center;
+ font-size:25px;position:relative;
+ animation:pop .6s ease-out both,pulse 2.4s ease-in-out .7s infinite
+}
+.icon::after{
+ content:"";position:absolute;inset:-4px;border-radius:50%;
+ animation:ring 2.4s ease-in-out .7s infinite
+}
+.text{min-width:0}
+.label{margin:0 0 4px;color:#ff4a00;font-size:14px;font-weight:600}
+p{margin:0;font-size:13px;line-height:1.6;color:#3e281a}
+@keyframes pop{0%{transform:scale(.7);opacity:0}70%{transform:scale(1.08)}100%{transform:scale(1);opacity:1}}
+@keyframes pulse{0%,100%{filter:drop-shadow(0 0 0 rgba(255,74,0,0))}50%{filter:drop-shadow(0 0 7px rgba(255,74,0,.45))}}
+@keyframes ring{0%,100%{box-shadow:0 0 0 0 rgba(255,74,0,.04)}50%{box-shadow:0 0 15px 5px rgba(255,74,0,.14)}}
+@media(prefers-reduced-motion:reduce){.icon,.icon::after{animation:none}}
+@media(max-width:550px){.wrap{padding:8px 10px}.tip{gap:12px;padding:14px 12px}.icon{flex-basis:44px;width:44px;height:44px;font-size:22px}p{font-size:12px}}
+</style>
+</head>
+<body>
+<div class="wrap">
+ <div class="tip">
+  <div class="icon" aria-hidden="true">
+<svg width="27" height="27" viewBox="0 0 24 24" fill="none">
+  <path d="M12 3.2L22 20.5H2L12 3.2Z" stroke="#ff4a00" stroke-width="2" stroke-linejoin="round"/>
+  <path d="M12 9V14" stroke="#ff4a00" stroke-width="2.2" stroke-linecap="round"/>
+  <circle cx="12" cy="17.2" r="1.15" fill="#ff4a00"/>
+</svg>
+</div>
+  <div class="text">
+   <div class="label">Don't forget!</div>
+   <p>De beste voetballers hebben duizenden ballen verkeerd geraakt voordat het vanzelf ging. En de beste dansers stonden ooit ook onhandig hun passen voor de spiegel te oefenen.</p>
+  </div>
+ </div>
+</div>
+</body>
+</html>
