@@ -1,0 +1,35 @@
+<!doctype html>
+<html lang="nl">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Wist je dat?</title>
+<style>
+@import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600&display=swap');
+*{box-sizing:border-box}
+html,body{margin:0;background:#fff;font-family:"Montserrat",Arial,sans-serif;color:#3e281a}
+.wrap{width:100%;padding:12px 18px;background:#fff}
+.tip{max-width:900px;margin:auto;display:flex;align-items:center;gap:18px;padding:17px 20px;background:#fff;border-left:5px solid #96f0ff;border-radius:0 14px 14px 0}
+.icon{flex:0 0 52px;width:52px;height:52px;border-radius:50%;background:#f1fdff;display:flex;align-items:center;justify-content:center;font-size:27px;position:relative;animation:pop .6s ease-out both,glow 2.2s ease-in-out .7s infinite}
+.icon::after{content:"";position:absolute;inset:-5px;border-radius:50%;animation:halo 2.2s ease-in-out .7s infinite}
+.text{min-width:0}.label{margin:0 0 4px;color:#003c24;font-size:14px;font-weight:600}
+p{margin:0;font-size:13px;line-height:1.6;color:#3e281a}
+@keyframes pop{0%{transform:scale(.7);opacity:0}70%{transform:scale(1.08)}100%{transform:scale(1);opacity:1}}
+@keyframes glow{0%,100%{filter:drop-shadow(0 0 1px rgba(255,196,0,.15))}50%{filter:drop-shadow(0 0 9px rgba(255,196,0,.75))}}
+@keyframes halo{0%,100%{box-shadow:0 0 0 0 rgba(255,196,0,.05)}50%{box-shadow:0 0 18px 6px rgba(255,196,0,.20)}}
+@media(prefers-reduced-motion:reduce){.icon,.icon::after{animation:none}}
+@media(max-width:550px){.wrap{padding:8px 10px}.tip{gap:12px;padding:14px 12px}.icon{flex-basis:44px;width:44px;height:44px;font-size:23px}p{font-size:12px}}
+</style>
+</head>
+<body>
+<div class="wrap">
+ <div class="tip">
+  <div class="icon" aria-hidden="true">💡</div>
+  <div class="text">
+   <div class="label">Wist je dat?</div>
+   <p>Emoties voel je ook in je lichaam, zoals een knoop in je buik of gespannen schouders. Hoe beter je deze signalen herkent, hoe beter je begrijpt wat er in je gebeurt. Op de volgende pagina ga je dit zelf ontdekken!</p>
+  </div>
+ </div>
+</div>
+</body>
+</html>
