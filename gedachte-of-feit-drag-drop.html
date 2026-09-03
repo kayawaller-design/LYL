@@ -1,0 +1,490 @@
+<!DOCTYPE html>
+<html lang="nl">
+<head>
+<meta charset="utf-8"/>
+<meta name="viewport" content="width=device-width,initial-scale=1"/>
+<title>Gedachte of feit? – Drag & drop</title>
+<style>
+@import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600&display=swap');
+
+:root{
+  --green:#003c24;
+  --mint:#b8ffaf;
+  --cyan:#96f0ff;
+  --orange:#ff4a00;
+  --beige:#ddcdba;
+  --brown:#3e281a;
+  --soft:#f7faf8;
+  --line:#dfe9e3;
+}
+*{box-sizing:border-box}
+body{
+  margin:0;
+  background:#fff;
+  color:var(--brown);
+  font-family:"Montserrat",Arial,sans-serif;
+}
+.wrap{
+  max-width:900px;
+  margin:0 auto;
+  padding:22px 18px 28px;
+}
+.kicker{
+  font-size:11px;
+  text-transform:uppercase;
+  letter-spacing:.09em;
+  font-weight:600;
+  color:#6f8379;
+  margin-bottom:8px;
+}
+h1{
+  margin:0 0 8px;
+  color:var(--green);
+  font-size:24px;
+  line-height:1.2;
+  font-weight:600;
+}
+.intro{
+  margin:0 0 16px;
+  font-size:15px;
+  line-height:1.6;
+}
+.progress{
+  height:8px;
+  background:#edf3ef;
+  border-radius:999px;
+  overflow:hidden;
+  margin:14px 0 8px;
+}
+.progress > div{
+  width:0;
+  height:100%;
+  background:var(--green);
+  transition:width .25s ease;
+}
+.meta{
+  display:flex;
+  justify-content:space-between;
+  gap:12px;
+  font-size:12px;
+  color:#6f8379;
+  margin-bottom:16px;
+}
+
+.game{
+  display:grid;
+  grid-template-columns:1fr 1fr;
+  gap:16px;
+  align-items:start;
+}
+.stack{
+  grid-column:1/-1;
+  min-height:126px;
+  border:1px solid var(--line);
+  border-radius:18px;
+  background:#fff;
+  padding:18px;
+  box-shadow:0 6px 22px rgba(0,60,36,.05);
+}
+.stack-label{
+  font-size:12px;
+  color:#6f8379;
+  font-weight:600;
+  margin-bottom:10px;
+}
+.card{
+  position:relative;
+  border:2px solid var(--green);
+  border-radius:16px;
+  background:#fff;
+  padding:18px 44px 18px 18px;
+  color:var(--green);
+  font-size:17px;
+  line-height:1.45;
+  font-weight:600;
+  cursor:grab;
+  user-select:none;
+  touch-action:none;
+  box-shadow:0 5px 14px rgba(0,60,36,.08);
+  transition:transform .15s ease, box-shadow .15s ease, opacity .15s ease;
+}
+.card:hover{
+  transform:translateY(-1px);
+  box-shadow:0 8px 18px rgba(0,60,36,.1);
+}
+.card:active{cursor:grabbing}
+.grip{
+  position:absolute;
+  right:16px;
+  top:50%;
+  transform:translateY(-50%);
+  color:#89a095;
+  font-size:23px;
+  line-height:1;
+}
+.card.dragging{
+  opacity:.94;
+  transform:rotate(1deg) scale(1.02);
+  box-shadow:0 14px 30px rgba(0,60,36,.16);
+  z-index:1000;
+}
+.card.wrong{
+  animation:shake .28s ease;
+  border-color:var(--orange);
+}
+@keyframes shake{
+  0%,100%{transform:translateX(0)}
+  25%{transform:translateX(-7px)}
+  75%{transform:translateX(7px)}
+}
+
+.zone{
+  min-height:205px;
+  border:2px dashed #bfcfc6;
+  border-radius:18px;
+  padding:17px;
+  background:#fbfdfc;
+  transition:.18s ease;
+}
+.zone.dragover{
+  transform:translateY(-2px);
+  border-color:var(--green);
+  background:#f1fff0;
+}
+.zone h2{
+  margin:0 0 5px;
+  color:var(--green);
+  font-size:18px;
+  font-weight:600;
+}
+.zone p{
+  margin:0 0 12px;
+  color:#728078;
+  font-size:12px;
+  line-height:1.5;
+}
+.zone-cards{
+  display:flex;
+  flex-direction:column;
+  gap:8px;
+}
+.placed{
+  border-radius:11px;
+  padding:10px 12px;
+  font-size:12px;
+  line-height:1.45;
+  color:var(--green);
+  background:#efffeb;
+  border:1px solid #cdebc5;
+}
+
+.feedback{
+  margin-top:14px;
+  min-height:46px;
+  border-radius:13px;
+  padding:12px 14px;
+  font-size:13px;
+  line-height:1.5;
+  display:none;
+}
+.feedback.show{display:block}
+.feedback.good{
+  background:#efffeb;
+  border-left:5px solid #67b94c;
+}
+.feedback.bad{
+  background:#fff3ee;
+  border-left:5px solid var(--orange);
+}
+.feedback strong{color:var(--green)}
+
+.end{
+  display:none;
+  text-align:center;
+  margin-top:18px;
+  border:2px solid #d7ead3;
+  border-radius:18px;
+  padding:28px 22px;
+  background:#f8fff6;
+}
+.end.show{display:block}
+.check{
+  width:58px;height:58px;
+  border-radius:50%;
+  margin:0 auto 13px;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  background:var(--green);
+  color:#fff;
+  font-size:29px;
+  font-weight:600;
+}
+.end h2{
+  color:var(--green);
+  font-size:23px;
+  margin:0 0 8px;
+}
+.end p{
+  margin:0 0 15px;
+  font-size:14px;
+  line-height:1.6;
+}
+.restart{
+  border:0;
+  background:var(--green);
+  color:#fff;
+  border-radius:11px;
+  padding:11px 17px;
+  font:600 14px "Montserrat",Arial,sans-serif;
+  cursor:pointer;
+}
+.mobilehint{
+  font-size:11px;
+  color:#87958e;
+  margin-top:10px;
+  text-align:center;
+}
+
+@media(max-width:620px){
+  .game{grid-template-columns:1fr}
+  .stack{grid-column:auto}
+  .zone{min-height:155px}
+  .card{font-size:15px}
+}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <div class="kicker">Mini-game</div>
+  <h1>Gedachte of feit?</h1>
+  <p class="intro">Sleep de zin naar de juiste plek. Is het iets dat je <strong>denkt of invult</strong>, of iets dat je echt kunt <strong>controleren</strong>?</p>
+
+  <div class="progress"><div id="bar"></div></div>
+  <div class="meta">
+    <span id="count">0 van 8 goed</span>
+    <span id="tries">Pogingen: 0</span>
+  </div>
+
+  <div id="playArea">
+    <div class="game">
+      <div class="stack">
+        <div class="stack-label">Sleep deze zin</div>
+        <div id="cardHost"></div>
+        <div class="feedback" id="feedback"></div>
+        <div class="mobilehint">Op mobiel kun je de kaart ook met je vinger slepen.</div>
+      </div>
+
+      <div class="zone" id="thoughtZone" data-zone="thought">
+        <h2>Gedachte</h2>
+        <p>Een verwachting, interpretatie of oordeel.</p>
+        <div class="zone-cards" id="thoughtCards"></div>
+      </div>
+
+      <div class="zone" id="factZone" data-zone="fact">
+        <h2>Feit</h2>
+        <p>Iets dat je kunt controleren of vaststellen.</p>
+        <div class="zone-cards" id="factCards"></div>
+      </div>
+    </div>
+  </div>
+
+  <div class="end" id="end">
+    <div class="check">✓</div>
+    <h2>Klaar!</h2>
+    <p id="endText"></p>
+    <button class="restart" id="restart">Nog een keer</button>
+  </div>
+</div>
+
+<script>
+const questions = [
+  {text:"Ik ga deze presentatie vast verpesten.", answer:"thought",
+   explanation:"Je voorspelt wat er gaat gebeuren. Dat weet je nog niet zeker."},
+  {text:"De presentatie begint om 10.00 uur.", answer:"fact",
+   explanation:"Dit kun je controleren in de planning."},
+  {text:"Iedereen vindt mij ongemakkelijk.", answer:"thought",
+   explanation:"Je kunt niet zeker weten wat iedereen over jou denkt."},
+  {text:"Ik kreeg gisteren feedback van mijn trainer.", answer:"fact",
+   explanation:"Dit beschrijft iets dat daadwerkelijk is gebeurd."},
+  {text:"Als ik één fout maak, doe ik het slecht.", answer:"thought",
+   explanation:"Dit is een oordeel. Eén fout zegt niet automatisch iets over het geheel."},
+  {text:"We werken met vier mensen in ons team.", answer:"fact",
+   explanation:"Het aantal teamleden kun je controleren."},
+  {text:"Ze reageert kort, dus ze zal wel boos op mij zijn.", answer:"thought",
+   explanation:"Je geeft betekenis aan haar reactie. Er kunnen ook andere verklaringen zijn."},
+  {text:"Ik heb mijn taak nog niet afgemaakt.", answer:"fact",
+   explanation:"Je kunt vaststellen of de taak af is of niet."}
+];
+
+let order=[], current=0, correct=0, tries=0;
+let draggingCard=null, offsetX=0, offsetY=0, originRect=null;
+
+const host=document.getElementById("cardHost");
+const feedback=document.getElementById("feedback");
+const bar=document.getElementById("bar");
+const count=document.getElementById("count");
+const triesEl=document.getElementById("tries");
+const end=document.getElementById("end");
+const playArea=document.getElementById("playArea");
+const thoughtZone=document.getElementById("thoughtZone");
+const factZone=document.getElementById("factZone");
+
+function shuffle(arr){
+  for(let i=arr.length-1;i>0;i--){
+    const j=Math.floor(Math.random()*(i+1));
+    [arr[i],arr[j]]=[arr[j],arr[i]];
+  }
+  return arr;
+}
+
+function start(){
+  order=shuffle([...Array(questions.length).keys()]);
+  current=0; correct=0; tries=0;
+  document.getElementById("thoughtCards").innerHTML="";
+  document.getElementById("factCards").innerHTML="";
+  end.classList.remove("show");
+  playArea.style.display="block";
+  updateMeta();
+  renderCard();
+}
+
+function updateMeta(){
+  bar.style.width=(correct/questions.length*100)+"%";
+  count.textContent=correct+" van "+questions.length+" goed";
+  triesEl.textContent="Pogingen: "+tries;
+}
+
+function renderCard(){
+  feedback.className="feedback";
+  feedback.innerHTML="";
+  host.innerHTML="";
+  if(current>=order.length){
+    finish();
+    return;
+  }
+
+  const idx=order[current];
+  const q=questions[idx];
+  const card=document.createElement("div");
+  card.className="card";
+  card.dataset.index=idx;
+  card.innerHTML='<span>'+q.text+'</span><span class="grip">⋮⋮</span>';
+  host.appendChild(card);
+
+  card.addEventListener("pointerdown",pointerDown);
+}
+
+function pointerDown(e){
+  if(e.button!==undefined && e.button!==0) return;
+  draggingCard=e.currentTarget;
+  originRect=draggingCard.getBoundingClientRect();
+  offsetX=e.clientX-originRect.left;
+  offsetY=e.clientY-originRect.top;
+
+  draggingCard.setPointerCapture?.(e.pointerId);
+  draggingCard.classList.add("dragging");
+  draggingCard.style.width=originRect.width+"px";
+  draggingCard.style.position="fixed";
+  draggingCard.style.left=originRect.left+"px";
+  draggingCard.style.top=originRect.top+"px";
+  draggingCard.style.margin="0";
+  draggingCard.style.pointerEvents="none";
+
+  document.addEventListener("pointermove",pointerMove);
+  document.addEventListener("pointerup",pointerUp,{once:true});
+  e.preventDefault();
+}
+
+function pointerMove(e){
+  if(!draggingCard) return;
+  draggingCard.style.left=(e.clientX-offsetX)+"px";
+  draggingCard.style.top=(e.clientY-offsetY)+"px";
+  [thoughtZone,factZone].forEach(z=>z.classList.remove("dragover"));
+  const zone=getZoneAt(e.clientX,e.clientY);
+  if(zone) zone.classList.add("dragover");
+}
+
+function getZoneAt(x,y){
+  for(const z of [thoughtZone,factZone]){
+    const r=z.getBoundingClientRect();
+    if(x>=r.left && x<=r.right && y>=r.top && y<=r.bottom) return z;
+  }
+  return null;
+}
+
+function pointerUp(e){
+  if(!draggingCard) return;
+  const card=draggingCard;
+  const zone=getZoneAt(e.clientX,e.clientY);
+  [thoughtZone,factZone].forEach(z=>z.classList.remove("dragover"));
+
+  card.releasePointerCapture?.(e.pointerId);
+  document.removeEventListener("pointermove",pointerMove);
+
+  if(zone){
+    checkDrop(zone.dataset.zone, card);
+  }else{
+    snapBack(card);
+  }
+  draggingCard=null;
+}
+
+function snapBack(card){
+  card.style.transition="left .18s ease, top .18s ease";
+  card.style.left=originRect.left+"px";
+  card.style.top=originRect.top+"px";
+  setTimeout(()=>{
+    card.removeAttribute("style");
+    card.classList.remove("dragging");
+  },190);
+}
+
+function checkDrop(zoneType, card){
+  tries++;
+  updateMeta();
+
+  const q=questions[Number(card.dataset.index)];
+  if(zoneType===q.answer){
+    correct++;
+    updateMeta();
+    feedback.className="feedback show good";
+    feedback.innerHTML="<strong>Klopt!</strong> "+q.explanation;
+
+    const placed=document.createElement("div");
+    placed.className="placed";
+    placed.textContent=q.text;
+    document.getElementById(zoneType==="thought"?"thoughtCards":"factCards").appendChild(placed);
+
+    card.remove();
+    current++;
+
+    setTimeout(renderCard,850);
+  }else{
+    feedback.className="feedback show bad";
+    feedback.innerHTML="<strong>Nog eens kijken.</strong> "+q.explanation;
+    card.classList.add("wrong");
+    snapBack(card);
+    setTimeout(()=>card.classList.remove("wrong"),350);
+  }
+}
+
+function finish(){
+  playArea.style.display="none";
+  end.classList.add("show");
+  const extra=tries===questions.length
+    ? " Je plaatste alles in één keer goed."
+    : " Soms voelt een gedachte heel echt, maar dat maakt het nog geen feit.";
+  document.getElementById("endText").textContent=
+    "Je hebt alle "+questions.length+" zinnen goed ingedeeld."+extra;
+}
+
+document.getElementById("restart").addEventListener("click",()=>{
+  start();
+  window.scrollTo({top:0,behavior:"smooth"});
+});
+
+start();
+</script>
+</body>
+</html>
