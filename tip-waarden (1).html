@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="nl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700&display=swap" rel="stylesheet">
+<title>Tip waarden</title>
+<style>
+* { box-sizing: border-box; }
+body {
+  margin: 0;
+  padding: 24px 16px;
+  background: #ffffff;
+  font-family: "Montserrat", Arial, sans-serif;
+  color: #3e281a;
+}
+.tip {
+  max-width: 720px;
+  margin: 0 auto;
+  min-height: 98px;
+  display: flex;
+  align-items: center;
+  border-left: 5px solid #96f0ff;
+  padding: 14px 18px;
+}
+.icon {
+  flex: 0 0 54px;
+  width: 54px;
+  height: 54px;
+  margin-right: 18px;
+  border-radius: 50%;
+  background: #f5fbfc;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 25px;
+}
+.content {
+  min-width: 0;
+  font-size: 14px;
+  line-height: 1.65;
+}
+.title {
+  display: block;
+  margin-bottom: 2px;
+  color: #003c24;
+  font-size: 15px;
+  font-weight: 700;
+}
+@media (max-width: 480px) {
+  body { padding: 14px 8px; }
+  .tip { padding: 12px 14px; align-items: flex-start; }
+  .icon {
+    flex-basis: 46px;
+    width: 46px;
+    height: 46px;
+    margin-right: 13px;
+    font-size: 22px;
+  }
+  .content { font-size: 13px; }
+}
+</style>
+</head>
+<body>
+  <div class="tip">
+    <div class="icon" aria-hidden="true">💡</div>
+    <div class="content">
+      <span class="title">Tip</span>
+      Er zijn geen goede of foute antwoorden. Het gaat om <strong>wat jij belangrijk vindt</strong>.
+      Vul dus in wat bij jou past, niet wat je denkt dat anderen willen horen.
+    </div>
+  </div>
+</body>
+</html>
