@@ -1,0 +1,423 @@
+<!DOCTYPE html>
+<html lang="nl">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@500;600;700&display=swap" rel="stylesheet">
+
+  <title>Geef je activiteit een upgrade</title>
+
+  <style>
+    * { box-sizing: border-box; }
+
+    body {
+      margin: 0;
+      padding: 24px 16px;
+      background: #ffffff;
+      font-family: "Montserrat", sans-serif;
+      color: #3e281a;
+    }
+
+    .container {
+      max-width: 820px;
+      margin: 0 auto;
+    }
+
+    .intro {
+      font-size: 15px;
+      line-height: 1.7;
+      margin-bottom: 24px;
+    }
+
+    .cards {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 14px;
+      margin-bottom: 28px;
+    }
+
+    .upgrade-card {
+      border: 1.5px solid #ddcdba;
+      border-radius: 16px;
+      padding: 18px;
+      background: #ffffff;
+      cursor: pointer;
+      transition: .2s ease;
+      min-height: 150px;
+    }
+
+    .upgrade-card:hover {
+      border-color: #003c24;
+      transform: translateY(-1px);
+    }
+
+    .upgrade-card.selected {
+      border-color: #003c24;
+      background: #f3fff1;
+      box-shadow: inset 0 0 0 1px #003c24;
+    }
+
+    .icon {
+      font-size: 28px;
+      margin-bottom: 10px;
+    }
+
+    .upgrade-card h3 {
+      margin: 0 0 8px;
+      color: #003c24;
+      font-size: 17px;
+    }
+
+    .upgrade-card p {
+      margin: 0;
+      font-size: 14px;
+      line-height: 1.55;
+      color: #5b4a40;
+    }
+
+    .full {
+      grid-column: 1 / -1;
+    }
+
+    .planner {
+      border-top: 1.5px solid #ddcdba;
+      padding-top: 26px;
+    }
+
+    .planner h3 {
+      margin: 0 0 8px;
+      color: #003c24;
+      font-size: 20px;
+    }
+
+    .planner-intro {
+      font-size: 14px;
+      line-height: 1.6;
+      margin-bottom: 20px;
+      color: #5b4a40;
+    }
+
+    .field {
+      margin-bottom: 18px;
+    }
+
+    .field label {
+      display: block;
+      margin-bottom: 8px;
+      font-size: 15px;
+      font-weight: 700;
+      color: #003c24;
+    }
+
+    textarea {
+      width: 100%;
+      min-height: 110px;
+      resize: vertical;
+      border: 1.5px solid #ddcdba;
+      border-radius: 12px;
+      padding: 14px;
+      font-family: "Montserrat", sans-serif;
+      font-size: 16px;
+      line-height: 1.6;
+      color: #3e281a;
+      outline: none;
+    }
+
+    textarea:focus {
+      border-color: #003c24;
+    }
+
+    textarea::placeholder {
+      color: #8d837b;
+    }
+
+    .summary-box {
+      background: #b8ffaf;
+      border-radius: 16px;
+      padding: 18px;
+      margin: 24px 0 18px;
+    }
+
+    .summary-box strong {
+      color: #003c24;
+    }
+
+    .summary-text {
+      margin-top: 8px;
+      font-size: 14px;
+      line-height: 1.65;
+    }
+
+    .bottom {
+      text-align: center;
+    }
+
+    .save-status {
+      min-height: 20px;
+      font-size: 13px;
+      color: #557060;
+      margin-bottom: 10px;
+    }
+
+    .download-btn {
+      border: none;
+      border-radius: 12px;
+      background: #ff4a00;
+      color: white;
+      font-family: "Montserrat", sans-serif;
+      font-size: 15px;
+      font-weight: 700;
+      padding: 14px 24px;
+      cursor: pointer;
+    }
+
+    .saved-note {
+      margin-top: 12px;
+      font-size: 12px;
+      line-height: 1.5;
+      color: #746c66;
+    }
+
+    @media (max-width: 650px) {
+      .cards {
+        grid-template-columns: 1fr;
+      }
+
+      .full {
+        grid-column: auto;
+      }
+
+      body {
+        padding: 16px 10px;
+      }
+    }
+  </style>
+</head>
+
+<body>
+  <div class="container">
+
+    <div class="intro">
+      Jullie activiteit zit erop. Maar misschien hoeft het hier helemaal niet te stoppen.
+      Een goed idee kun je <strong>nog een keer uitvoeren, groter maken of verder ontwikkelen</strong>.
+      Kies hieronder welke upgrade het beste bij jullie activiteit past.
+    </div>
+
+    <div class="cards" id="cards">
+      <button type="button" class="upgrade-card" data-value="Nog een keer">
+        <div class="icon">🔁</div>
+        <h3>Nog een keer</h3>
+        <p>Organiseer dezelfde activiteit opnieuw en verbeter wat de volgende keer beter kan.</p>
+      </button>
+
+      <button type="button" class="upgrade-card" data-value="Groter maken">
+        <div class="icon">👥</div>
+        <h3>Groter maken</h3>
+        <p>Nodig meer deelnemers uit of maak er een grotere editie van.</p>
+      </button>
+
+      <button type="button" class="upgrade-card" data-value="Samenwerken">
+        <div class="icon">🤝</div>
+        <h3>Samenwerken</h3>
+        <p>Zoek een school, buurthuis, stichting of bedrijf dat mee wil doen.</p>
+      </button>
+
+      <button type="button" class="upgrade-card" data-value="Meer mensen bereiken">
+        <div class="icon">📣</div>
+        <h3>Meer mensen bereiken</h3>
+        <p>Deel je activiteit online of maak anderen enthousiast om mee te doen.</p>
+      </button>
+
+      <button type="button" class="upgrade-card full" data-value="Iets blijvends maken">
+        <div class="icon">🌱</div>
+        <h3>Iets blijvends maken</h3>
+        <p>Maak er bijvoorbeeld een terugkerend event, initiatief of project van.</p>
+      </button>
+    </div>
+
+    <div class="planner">
+      <h3>Jouw upgrade</h3>
+      <div class="planner-intro">
+        Denk na over hoe jullie activiteit verder zou kunnen groeien. Er is geen goed of fout antwoord.
+      </div>
+
+      <div class="field">
+        <label for="change">Wat zou je willen veranderen, uitbreiden of groter maken?</label>
+        <textarea id="change" placeholder="Schrijf hier jouw idee..."></textarea>
+      </div>
+
+      <div class="field">
+        <label for="need">Wie of wat heb je daarvoor nodig?</label>
+        <textarea id="need" placeholder="Denk aan mensen, geld, een locatie, materialen of een organisatie..."></textarea>
+      </div>
+
+      <div class="field">
+        <label for="firstStep">Wat zou jouw eerste stap kunnen zijn?</label>
+        <textarea id="firstStep" placeholder="Wat zou je als eerste kunnen doen?"></textarea>
+      </div>
+
+      <div class="summary-box">
+        <strong>Mijn volgende stap</strong>
+        <div class="summary-text" id="summaryText">
+          Kies eerst een upgrade en vul de vragen hierboven in.
+        </div>
+      </div>
+
+      <div class="bottom">
+        <div class="save-status" id="saveStatus">
+          Je antwoorden worden automatisch bewaard op dit apparaat.
+        </div>
+
+        <button type="button" class="download-btn" id="downloadBtn">
+          Download mijn plan
+        </button>
+
+        <div class="saved-note">
+          Bewaar je plan zodat je er later nog eens naar kunt kijken of ermee verder kunt gaan.
+        </div>
+      </div>
+    </div>
+
+  </div>
+
+<script>
+  const cards = document.querySelectorAll(".upgrade-card");
+  const change = document.getElementById("change");
+  const need = document.getElementById("need");
+  const firstStep = document.getElementById("firstStep");
+  const summaryText = document.getElementById("summaryText");
+  const saveStatus = document.getElementById("saveStatus");
+  const downloadBtn = document.getElementById("downloadBtn");
+
+  const storageKey = "LYL_activiteit_upgrade";
+  let selectedUpgrade = "";
+
+  function updateSummary() {
+    const parts = [];
+
+    if (selectedUpgrade) {
+      parts.push("Ik wil onze activiteit upgraden door te kiezen voor: " + selectedUpgrade + ".");
+    }
+
+    if (change.value.trim()) {
+      parts.push("Ik wil " + change.value.trim() + ".");
+    }
+
+    if (need.value.trim()) {
+      parts.push("Daarvoor heb ik " + need.value.trim() + " nodig.");
+    }
+
+    if (firstStep.value.trim()) {
+      parts.push("Mijn eerste stap is " + firstStep.value.trim() + ".");
+    }
+
+    summaryText.textContent = parts.length
+      ? parts.join(" ")
+      : "Kies eerst een upgrade en vul de vragen hierboven in.";
+  }
+
+  function saveData() {
+    const data = {
+      selectedUpgrade,
+      change: change.value,
+      need: need.value,
+      firstStep: firstStep.value
+    };
+
+    try {
+      localStorage.setItem(storageKey, JSON.stringify(data));
+      saveStatus.textContent = "✓ Opgeslagen";
+
+      clearTimeout(window.saveTimer);
+      window.saveTimer = setTimeout(() => {
+        saveStatus.textContent = "Je antwoorden worden automatisch bewaard op dit apparaat.";
+      }, 1500);
+    } catch (error) {
+      saveStatus.textContent = "Automatisch bewaren wordt niet ondersteund in deze browser.";
+    }
+  }
+
+  function selectCard(card) {
+    cards.forEach(c => c.classList.remove("selected"));
+    card.classList.add("selected");
+    selectedUpgrade = card.dataset.value;
+    updateSummary();
+    saveData();
+  }
+
+  cards.forEach(card => {
+    card.addEventListener("click", () => selectCard(card));
+  });
+
+  [change, need, firstStep].forEach(field => {
+    field.addEventListener("input", () => {
+      updateSummary();
+      saveData();
+    });
+  });
+
+  function loadData() {
+    try {
+      const stored = localStorage.getItem(storageKey);
+      if (!stored) return;
+
+      const data = JSON.parse(stored);
+
+      selectedUpgrade = data.selectedUpgrade || "";
+      change.value = data.change || "";
+      need.value = data.need || "";
+      firstStep.value = data.firstStep || "";
+
+      if (selectedUpgrade) {
+        cards.forEach(card => {
+          if (card.dataset.value === selectedUpgrade) {
+            card.classList.add("selected");
+          }
+        });
+      }
+
+      updateSummary();
+    } catch (error) {
+      console.log("Opgeslagen plan kon niet worden geladen.");
+    }
+  }
+
+  downloadBtn.addEventListener("click", function() {
+    const output =
+`MIJN ACTIVITEIT-UPGRADE – LEAD YOUR LIFE
+
+Gekozen upgrade:
+${selectedUpgrade || "(Nog niet gekozen)"}
+
+Wat wil ik veranderen, uitbreiden of groter maken?
+${change.value.trim() || "(Nog niet ingevuld)"}
+
+Wie of wat heb ik daarvoor nodig?
+${need.value.trim() || "(Nog niet ingevuld)"}
+
+Wat is mijn eerste stap?
+${firstStep.value.trim() || "(Nog niet ingevuld)"}
+
+MIJN VOLGENDE STAP
+${summaryText.textContent}
+`;
+
+    const blob = new Blob([output], { type: "text/plain;charset=utf-8" });
+    const url = URL.createObjectURL(blob);
+    const link = document.createElement("a");
+
+    link.href = url;
+    link.download = "mijn-activiteit-upgrade-LYL.txt";
+    document.body.appendChild(link);
+    link.click();
+    document.body.removeChild(link);
+    URL.revokeObjectURL(url);
+  });
+
+  loadData();
+</script>
+</body>
+</html>
