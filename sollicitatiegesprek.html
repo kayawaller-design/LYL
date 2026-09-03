@@ -1,0 +1,416 @@
+<!DOCTYPE html>
+<html lang="nl">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@500;600;700&display=swap" rel="stylesheet">
+
+  <title>Oefen je sollicitatiegesprek</title>
+
+  <style>
+    * { box-sizing: border-box; }
+
+    body {
+      margin: 0;
+      padding: 24px 16px;
+      background: #ffffff;
+      font-family: "Montserrat", sans-serif;
+      color: #3e281a;
+    }
+
+    .container {
+      max-width: 760px;
+      margin: 0 auto;
+    }
+
+    .intro {
+      margin-bottom: 28px;
+    }
+
+    .intro h2 {
+      margin: 0 0 10px;
+      color: #003c24;
+      font-size: 26px;
+      font-weight: 700;
+    }
+
+    .intro p {
+      margin: 0;
+      font-size: 15px;
+      line-height: 1.7;
+    }
+
+    .tip {
+      background: #b8ffaf;
+      border-radius: 14px;
+      padding: 16px 18px;
+      margin: 24px 0;
+      font-size: 14px;
+      line-height: 1.65;
+    }
+
+    .tip strong {
+      color: #003c24;
+    }
+
+    .question-card {
+      border: 1.5px solid #ddcdba;
+      border-radius: 18px;
+      padding: 22px;
+      margin-bottom: 18px;
+      background: #ffffff;
+    }
+
+    .number {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      width: 34px;
+      height: 34px;
+      border-radius: 50%;
+      background: #003c24;
+      color: white;
+      font-size: 14px;
+      font-weight: 700;
+      margin-bottom: 12px;
+    }
+
+    .question {
+      font-size: 17px;
+      line-height: 1.5;
+      font-weight: 700;
+      color: #003c24;
+      margin-bottom: 14px;
+    }
+
+    textarea {
+      width: 100%;
+      min-height: 130px;
+      resize: vertical;
+      border: 1.5px solid #ddcdba;
+      border-radius: 12px;
+      padding: 14px;
+      font-family: "Montserrat", sans-serif;
+      font-size: 16px;
+      line-height: 1.6;
+      color: #3e281a;
+      outline: none;
+      transition: border-color .2s ease;
+    }
+
+    textarea:focus {
+      border-color: #003c24;
+    }
+
+    textarea::placeholder {
+      color: #8d837b;
+    }
+
+    details {
+      margin-top: 14px;
+      border-radius: 12px;
+      background: #f6f2ed;
+      overflow: hidden;
+    }
+
+    summary {
+      padding: 14px 16px;
+      cursor: pointer;
+      font-weight: 700;
+      color: #003c24;
+      font-size: 14px;
+      list-style: none;
+    }
+
+    summary::-webkit-details-marker {
+      display: none;
+    }
+
+    summary::after {
+      content: "+";
+      float: right;
+      font-size: 20px;
+      line-height: 16px;
+    }
+
+    details[open] summary::after {
+      content: "−";
+    }
+
+    .example {
+      padding: 0 16px 16px;
+      font-size: 14px;
+      line-height: 1.65;
+      color: #3e281a;
+    }
+
+    .example strong {
+      color: #003c24;
+    }
+
+    .bottom {
+      margin-top: 28px;
+      text-align: center;
+    }
+
+    .save-status {
+      min-height: 22px;
+      margin-bottom: 12px;
+      font-size: 13px;
+      color: #557060;
+    }
+
+    .download-btn {
+      display: inline-block;
+      border: none;
+      border-radius: 12px;
+      background: #ff4a00;
+      color: white;
+      font-family: "Montserrat", sans-serif;
+      font-size: 15px;
+      font-weight: 700;
+      padding: 14px 24px;
+      cursor: pointer;
+      transition: transform .15s ease, opacity .15s ease;
+    }
+
+    .download-btn:hover {
+      transform: translateY(-1px);
+    }
+
+    .download-btn:active {
+      transform: translateY(0);
+    }
+
+    .saved-note {
+      margin-top: 12px;
+      font-size: 12px;
+      line-height: 1.5;
+      color: #746c66;
+    }
+
+    @media (max-width: 600px) {
+      body {
+        padding: 16px 10px;
+      }
+
+      .question-card {
+        padding: 18px 15px;
+      }
+
+      .intro h2 {
+        font-size: 22px;
+      }
+
+      .question {
+        font-size: 16px;
+      }
+    }
+  </style>
+</head>
+
+<body>
+<div class="container">
+
+  <div class="intro">
+    <p>
+      Tijdens Lead Your Life heb je ervaringen opgedaan die je kunt gebruiken
+      tijdens een sollicitatiegesprek. Probeer de vragen hieronder te beantwoorden
+      met voorbeelden uit jouw eigen LYL-ervaring.
+    </p>
+  </div>
+
+  <div class="tip">
+    <strong>Tip:</strong> wees zo concreet mogelijk. Vertel wat er gebeurde,
+    wat jouw rol was, wat jij hebt gedaan en wat het resultaat was.
+  </div>
+
+  <div class="question-card">
+    <div class="number">1</div>
+    <div class="question">
+      Kun je een voorbeeld geven van een moment waarop je goed hebt samengewerkt?
+    </div>
+    <textarea data-question="1" placeholder="Schrijf hier jouw antwoord..."></textarea>
+    <details>
+      <summary>Bekijk een voorbeeld</summary>
+      <div class="example">
+        <strong>Voorbeeld:</strong><br><br>
+        Tijdens Lead Your Life organiseerde ik samen met mijn team een activiteit.
+        We verdeelden de taken en spraken af wie waarvoor verantwoordelijk was.
+        Ik hield contact met mijn teamleden en hielp wanneer iemand vastliep.
+        Daardoor konden we de activiteit samen goed uitvoeren.
+      </div>
+    </details>
+  </div>
+
+  <div class="question-card">
+    <div class="number">2</div>
+    <div class="question">
+      Kun je een voorbeeld geven van een moment waarop jij initiatief hebt genomen?
+    </div>
+    <textarea data-question="2" placeholder="Schrijf hier jouw antwoord..."></textarea>
+    <details>
+      <summary>Bekijk een voorbeeld</summary>
+      <div class="example">
+        <strong>Voorbeeld:</strong><br><br>
+        Tijdens het voorbereiden van onze activiteit merkte ik dat we nog geen
+        locatie hadden. Ik heb zelf verschillende mogelijkheden opgezocht en
+        contact opgenomen met een locatie. Daardoor konden we verder met onze planning.
+      </div>
+    </details>
+  </div>
+
+  <div class="question-card">
+    <div class="number">3</div>
+    <div class="question">
+      Vertel eens over een probleem of uitdaging die je hebt opgelost.
+    </div>
+    <textarea data-question="3" placeholder="Wat gebeurde er en wat heb jij gedaan?"></textarea>
+    <details>
+      <summary>Bekijk een voorbeeld</summary>
+      <div class="example">
+        <strong>Voorbeeld:</strong><br><br>
+        Vlak voor onze activiteit bleek dat iemand uit ons team niet aanwezig
+        kon zijn. We moesten snel de taken opnieuw verdelen. Ik heb samen met
+        mijn team gekeken wat er nog moest gebeuren en heb een extra taak op
+        me genomen. Zo kon de activiteit toch doorgaan.
+      </div>
+    </details>
+  </div>
+
+  <div class="question-card">
+    <div class="number">4</div>
+    <div class="question">
+      Waar ben je trots op als je terugkijkt op Lead Your Life?
+    </div>
+    <textarea data-question="4" placeholder="Schrijf hier jouw antwoord..."></textarea>
+    <details>
+      <summary>Bekijk een voorbeeld</summary>
+      <div class="example">
+        <strong>Voorbeeld:</strong><br><br>
+        Ik ben er trots op dat ik tijdens onze activiteit een presentatie heb
+        gegeven. Dat vond ik vooraf spannend. Toch heb ik het gedaan en merkte
+        ik achteraf dat het beter ging dan ik had verwacht.
+      </div>
+    </details>
+  </div>
+
+  <div class="question-card">
+    <div class="number">5</div>
+    <div class="question">
+      Wat heb je tijdens Lead Your Life over jezelf geleerd?
+    </div>
+    <textarea data-question="5" placeholder="Denk bijvoorbeeld aan samenwerken, plannen, presenteren of initiatief nemen..."></textarea>
+    <details>
+      <summary>Bekijk een voorbeeld</summary>
+      <div class="example">
+        <strong>Voorbeeld:</strong><br><br>
+        Ik heb ontdekt dat ik goed ben in overzicht houden. Tijdens het project
+        hield ik bij wat er nog moest gebeuren en herinnerde ik mijn team aan
+        afspraken. Dat is iets wat ik ook in een toekomstige baan kan gebruiken.
+      </div>
+    </details>
+  </div>
+
+  <div class="bottom">
+    <div class="save-status" id="saveStatus">
+      Je antwoorden worden automatisch bewaard op dit apparaat.
+    </div>
+
+    <button class="download-btn" id="downloadBtn">
+      Download mijn antwoorden
+    </button>
+
+    <div class="saved-note">
+      Je kunt dit bestand bewaren en later gebruiken om je voor te bereiden
+      op een echt sollicitatiegesprek.
+    </div>
+  </div>
+
+</div>
+
+<script>
+  const textareas = document.querySelectorAll("textarea[data-question]");
+  const saveStatus = document.getElementById("saveStatus");
+  const downloadBtn = document.getElementById("downloadBtn");
+  const storageKey = "LYL_sollicitatie_antwoorden";
+
+  function loadAnswers() {
+    try {
+      const stored = localStorage.getItem(storageKey);
+      if (!stored) return;
+      const answers = JSON.parse(stored);
+
+      textareas.forEach(textarea => {
+        const number = textarea.dataset.question;
+        if (answers[number]) {
+          textarea.value = answers[number];
+        }
+      });
+    } catch (error) {
+      console.log("Antwoorden konden niet worden geladen.");
+    }
+  }
+
+  function saveAnswers() {
+    const answers = {};
+    textareas.forEach(textarea => {
+      answers[textarea.dataset.question] = textarea.value;
+    });
+
+    try {
+      localStorage.setItem(storageKey, JSON.stringify(answers));
+      saveStatus.textContent = "✓ Opgeslagen";
+
+      clearTimeout(window.saveTimer);
+      window.saveTimer = setTimeout(() => {
+        saveStatus.textContent =
+          "Je antwoorden worden automatisch bewaard op dit apparaat.";
+      }, 1600);
+    } catch (error) {
+      saveStatus.textContent =
+        "Automatisch bewaren wordt niet ondersteund in deze browser.";
+    }
+  }
+
+  textareas.forEach(textarea => {
+    textarea.addEventListener("input", saveAnswers);
+  });
+
+  downloadBtn.addEventListener("click", function() {
+    const questions = [
+      "Kun je een voorbeeld geven van een moment waarop je goed hebt samengewerkt?",
+      "Kun je een voorbeeld geven van een moment waarop jij initiatief hebt genomen?",
+      "Vertel eens over een probleem of uitdaging die je hebt opgelost.",
+      "Waar ben je trots op als je terugkijkt op Lead Your Life?",
+      "Wat heb je tijdens Lead Your Life over jezelf geleerd?"
+    ];
+
+    let output = "MIJN SOLLICITATIE-OEFENING – LEAD YOUR LIFE\n\n";
+
+    textareas.forEach((textarea, index) => {
+      output += (index + 1) + ". " + questions[index] + "\n\n";
+      output += textarea.value.trim() || "(Nog niet ingevuld)";
+      output += "\n\n------------------------------\n\n";
+    });
+
+    const blob = new Blob([output], { type: "text/plain;charset=utf-8" });
+    const url = URL.createObjectURL(blob);
+    const link = document.createElement("a");
+
+    link.href = url;
+    link.download = "mijn-sollicitatie-oefening-LYL.txt";
+    document.body.appendChild(link);
+    link.click();
+    document.body.removeChild(link);
+    URL.revokeObjectURL(url);
+  });
+
+  loadAnswers();
+</script>
+
+</body>
+</html>
