@@ -19,7 +19,7 @@
   .primary{font-size:14px}
 }
 @media(max-width:360px){main{padding:6px 6px 16px}.choice{padding:9px 8px;grid-template-columns:26px minmax(0,1fr);column-gap:7px}.emoji{font-size:19px}.choice strong{font-size:15px}.choice span:last-child{font-size:12px}p.intro{font-size:13px}}
-</style></head><body><main>
+.overview-answers{display:grid;gap:12px;margin:20px 0 26px}.overview-item{border:1.5px solid #dfcdb9;border-radius:15px;padding:16px;background:#fff;overflow-wrap:anywhere}.overview-item strong{display:block;color:#06482d;font-size:16px;margin-bottom:8px}.overview-item p{margin:0;white-space:pre-wrap;line-height:1.5}.overview-actions{margin-top:20px}@media(max-width:700px){.overview-item{padding:12px}.overview-item strong{font-size:15px}.overview-item p{font-size:14px}}</style></head><body><main>
 <section id="select"><p class="intro">Jullie activiteit zit erop. Maar misschien hoeft het hier helemaal niet te stoppen. Een goed idee kun je <b>nog een keer uitvoeren, groter maken of verder ontwikkelen.</b> Kies hieronder welke upgrade het beste bij jullie activiteit past.</p>
 <div class="grid" id="choices"></div></section>
 <section id="plan" class="hidden"><button class="back" id="back">← Terug</button><div class="chosen" id="chosen"></div><h2>Maak jullie plan</h2><p class="sub">Beantwoord de vier vragen. Zo maak je van jullie idee een concreet plan.</p><form id="form">
@@ -27,8 +27,17 @@
 <div class="field"><label for="q2"><span class="num">2</span>Wie of wat hebben jullie nodig?</label><textarea id="q2" required placeholder="Denk aan mensen, materialen, geld of een locatie..."></textarea></div>
 <div class="field"><label for="q3"><span class="num">3</span>Wat is de eerste stap die jullie gaan zetten?</label><textarea id="q3" required placeholder="Wat kunnen jullie als eerste doen om te beginnen?"></textarea></div>
 <div class="field"><label for="q4"><span class="num">4</span>Wanneer gaan jullie dit doen?</label><textarea id="q4" required placeholder="Kies een moment of schrijf een datum op..."></textarea></div>
-<div class="form-actions"><button type="button" class="back" id="back2">← Terug naar keuzes</button><button class="primary" type="submit">↓ Download jullie plan (PDF)</button></div><p class="note">Je antwoorden blijven op dit apparaat totdat je deze pagina sluit.</p></form></section>
-</main><script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.2/jspdf.umd.min.js"></script><script>
+<div class="form-actions"><button type="button" class="back" id="back2">← Terug naar keuzes</button><button class="primary" type="submit">Bekijk jullie plan →</button></div><p class="note">Je antwoorden blijven beschikbaar zolang deze pagina openstaat.</p></form></section>
+<section id="overview" class="hidden">
+<button class="back" id="editPlan">← Antwoorden aanpassen</button>
+<div class="chosen" id="overviewChoice"></div>
+<h2>Jullie upgradeplan</h2>
+<p class="sub">Dit is jullie plan. Kopieer het en bewaar het bijvoorbeeld in jullie notities of deel het op de Huddle-feed.</p>
+<div id="overviewAnswers" class="overview-answers"></div>
+<div class="form-actions"><button type="button" class="back" id="editPlan2">← Aanpassen</button><button class="primary" id="copyPlan" type="button">Kopieer jullie plan</button></div>
+<p id="copyStatus" class="note" role="status" aria-live="polite"></p>
+</section>
+</main><script>
 const options=[["🔁","Nog een keer","Organiseer dezelfde activiteit opnieuw en verbeter wat de volgende keer beter kan."],["👥","Groter maken","Nodig meer deelnemers uit of maak er een grotere editie van."],["🤝","Samenwerken","Zoek een school, buurthuis, stichting of bedrijf dat mee wil doen."],["📣","Meer mensen bereiken","Deel je activiteit online of maak anderen enthousiast om mee te doen."],["🌱","Iets blijvends maken","Maak er bijvoorbeeld een terugkerend event, initiatief of project van."]];
 const questionSets=[
 [["Wat willen jullie de volgende keer verbeteren?","Wat ging goed en wat kan beter?"],["Wie of wat hebben jullie nodig om het opnieuw te organiseren?","Denk aan mensen, materialen of een locatie..."],["Wat is jullie eerste stap?","Wat gaan jullie als eerste regelen?"],["Wanneer gaan jullie deze stap zetten?","Noem een datum of moment..."]],
@@ -42,7 +51,30 @@ function applyQuestions(){questionSets[selected].forEach(([label,placeholder],i)
 function showPlan(){applyQuestions();document.getElementById("select").classList.add("hidden");document.getElementById("plan").classList.remove("hidden");document.getElementById("chosen").textContent=options[selected][0]+" "+options[selected][1]+" — Jullie gekozen upgrade";window.scrollTo(0,0)}
 function showChoices(){document.getElementById("plan").classList.add("hidden");document.getElementById("select").classList.remove("hidden");window.scrollTo(0,0)}
 document.getElementById("back").onclick=showChoices;document.getElementById("back2").onclick=showChoices;
-document.getElementById("form").addEventListener("submit",e=>{e.preventDefault();const labels=questionSets[selected].map(q=>q[0]);const values=labels.map((_,i)=>document.getElementById("q"+(i+1)).value.trim());if(values.some(v=>!v)){document.getElementById("form").reportValidity();return}
-if(!window.jspdf){alert("De PDF-functie kon niet laden. Controleer je internetverbinding en probeer opnieuw.");return}
-const pdf=new window.jspdf.jsPDF({unit:"mm",format:"a4"});const width=170;let y=22;pdf.setTextColor(5,70,44);pdf.setFont("helvetica","bold");pdf.setFontSize(21);pdf.text("Ons upgradeplan",20,y);y+=14;pdf.setFontSize(12);pdf.text("Gekozen upgrade: "+options[selected][1],20,y);y+=14;labels.forEach((label,i)=>{pdf.setTextColor(5,70,44);pdf.setFont("helvetica","bold");pdf.setFontSize(12);if(y>260){pdf.addPage();y=22}pdf.text((i+1)+". "+label,20,y);y+=8;pdf.setTextColor(48,42,37);pdf.setFont("helvetica","normal");pdf.setFontSize(11);const lines=pdf.splitTextToSize(values[i],width);for(const line of lines){if(y>277){pdf.addPage();y=22}pdf.text(line,20,y);y+=6}y+=12});pdf.save("ons-upgradeplan.pdf")});
+let planText="";
+function editPlan(){document.getElementById("overview").classList.add("hidden");document.getElementById("plan").classList.remove("hidden");window.scrollTo(0,0)}
+document.getElementById("editPlan").onclick=editPlan;
+document.getElementById("editPlan2").onclick=editPlan;
+document.getElementById("form").addEventListener("submit",e=>{
+ e.preventDefault();
+ const labels=questionSets[selected].map(q=>q[0]);
+ const values=labels.map((_,i)=>document.getElementById("q"+(i+1)).value.trim());
+ if(values.some(v=>!v)){document.getElementById("form").reportValidity();return}
+ planText="Ons upgradeplan\nGekozen upgrade: "+options[selected][1]+"\n\n"+labels.map((q,i)=>(i+1)+". "+q+"\n"+values[i]).join("\n\n");
+ document.getElementById("overviewChoice").textContent=options[selected][0]+" "+options[selected][1]+" — Jullie gekozen upgrade";
+ const box=document.getElementById("overviewAnswers");box.replaceChildren();
+ labels.forEach((q,i)=>{const item=document.createElement("div");item.className="overview-item";const heading=document.createElement("strong");heading.textContent=(i+1)+". "+q;const answer=document.createElement("p");answer.textContent=values[i];item.append(heading,answer);box.appendChild(item)});
+ document.getElementById("copyStatus").textContent="";
+ document.getElementById("plan").classList.add("hidden");document.getElementById("overview").classList.remove("hidden");window.scrollTo(0,0)
+});
+document.getElementById("copyPlan").addEventListener("click",async()=>{
+ const status=document.getElementById("copyStatus");
+ try{
+  if(navigator.clipboard&&window.isSecureContext){await navigator.clipboard.writeText(planText)}
+  else{const ta=document.createElement("textarea");ta.value=planText;ta.style.position="fixed";ta.style.left="-9999px";document.body.appendChild(ta);ta.select();const ok=document.execCommand("copy");ta.remove();if(!ok)throw Error("copy failed")}
+  status.textContent="Gekopieerd! Plak jullie plan waar je het wilt bewaren.";
+ }catch(e){
+  const ta=document.createElement("textarea");ta.value=planText;ta.readOnly=true;ta.style.width="100%";ta.style.minHeight="160px";ta.setAttribute("aria-label","Jullie plan om handmatig te kopiëren");status.replaceChildren(document.createTextNode("Automatisch kopiëren is hier niet toegestaan. Selecteer en kopieer onderstaande tekst:"),ta);ta.focus();ta.select();
+ }
+});
 </script></body></html>
