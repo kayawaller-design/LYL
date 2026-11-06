@@ -151,6 +151,16 @@
       color: #003c24;
     }
 
+    .question-card[hidden], .bottom[hidden], .review[hidden] { display: none !important; }
+    .step-nav { display:flex; align-items:center; justify-content:space-between; gap:12px; margin:14px 0 4px; }
+    .step-btn { background:#003c24; color:white; border:0; border-radius:12px; padding:12px 18px; font:700 14px Montserrat,sans-serif; cursor:pointer; }
+    .step-btn.secondary { background:#f6f2ed; color:#003c24; }
+    .step-btn:disabled { opacity:.4; cursor:default; }
+    .step-count { font-size:13px; color:#557060; font-weight:700; }
+    .review { margin-top:14px; }
+    .review-card { background:#fff; border:1.5px solid #ddcdba; border-radius:14px; padding:16px; margin-bottom:12px; overflow-wrap:anywhere; }
+    .review-card strong { display:block; color:#003c24; margin-bottom:8px; line-height:1.5; }
+    .review-card p { margin:0; white-space:pre-wrap; line-height:1.6; }
     .bottom {
       margin-top: 28px;
       text-align: center;
@@ -193,6 +203,7 @@
     }
 
     @media (max-width: 600px) {
+      .step-nav { gap:8px; } .step-btn { padding:11px 12px; font-size:13px; } .step-count { font-size:12px; } .review-card { padding:12px; }
       html, body { width: 100%; max-width: 100%; overflow-x: hidden; background: #ffffff; }
       .container { width: 100%; max-width: 100%; margin: 0; padding: 0; }
       body {
@@ -317,7 +328,16 @@
     </details>
   </div>
 
-  <div class="bottom">
+  <div class="step-nav" id="stepNav">
+    <button type="button" class="step-btn secondary" id="prevBtn">← Vorige</button>
+    <span class="step-count" id="stepCount" aria-live="polite">Vraag 1 van 5</span>
+    <button type="button" class="step-btn" id="nextBtn">Volgende →</button>
+  </div>
+  <section class="review" id="review" hidden>
+    <div class="intro"><h2>Jouw antwoorden</h2><p>Bekijk je antwoorden hieronder. Je kunt teruggaan om iets aan te passen.</p></div>
+    <div id="reviewAnswers"></div>
+  </section>
+  <div class="bottom" id="bottom" hidden>
     <div class="save-status" id="saveStatus">
       Je antwoorden worden automatisch bewaard op dit apparaat.
     </div>
@@ -411,7 +431,40 @@
     URL.revokeObjectURL(url);
   });
 
+  const cards = [...document.querySelectorAll(".question-card")];
+  const stepNav = document.getElementById("stepNav");
+  const review = document.getElementById("review");
+  const bottom = document.getElementById("bottom");
+  const stepCount = document.getElementById("stepCount");
+  const prevBtn = document.getElementById("prevBtn");
+  const nextBtn = document.getElementById("nextBtn");
+  let step = 0;
+  function showStep(index) {
+    step = Math.max(0, Math.min(cards.length, index));
+    cards.forEach((card, i) => { card.hidden = i !== step; });
+    const isReview = step === cards.length;
+    review.hidden = !isReview;
+    bottom.hidden = !isReview;
+    stepCount.textContent = isReview ? "Overzicht" : "Vraag " + (step + 1) + " van " + cards.length;
+    prevBtn.disabled = step === 0;
+    nextBtn.hidden = isReview;
+    nextBtn.textContent = step === cards.length - 1 ? "Bekijk antwoorden →" : "Volgende →";
+    if (isReview) {
+      const target = document.getElementById("reviewAnswers");
+      target.replaceChildren();
+      cards.forEach((card, i) => {
+        const item = document.createElement("div"); item.className = "review-card";
+        const heading = document.createElement("strong"); heading.textContent = (i+1) + ". " + card.querySelector(".question").textContent.trim();
+        const answer = document.createElement("p"); answer.textContent = textareas[i].value.trim() || "(Nog niet ingevuld)";
+        item.append(heading, answer); target.appendChild(item);
+      });
+    }
+    window.scrollTo(0, 0);
+  }
+  prevBtn.addEventListener("click", () => showStep(step - 1));
+  nextBtn.addEventListener("click", () => showStep(step + 1));
   loadAnswers();
+  showStep(0);
 </script>
 
 </body>
