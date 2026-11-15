@@ -1,0 +1,33 @@
+<!doctype html>
+<html lang="nl">
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Quote over jongvolwassenheid</title>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600&display=swap">
+<style>
+* { box-sizing: border-box; }
+body { margin: 0; padding: 12px 18px; background: #fff; color: #3e281a; font-family: Montserrat, sans-serif; }
+figure { display: grid; grid-template-columns: 52px 1fr; align-items: center; column-gap: 18px; max-width: 900px; margin: 0 auto; padding: 17px 20px; border-left: 5px solid #96f0ff; border-radius: 0 14px 14px 0; }
+.icon { display: grid; place-items: center; grid-row: span 2; height: 52px; border-radius: 50%; background: #e8faff; color: #22616e; animation: pop .65s ease-out both; }
+.icon span { font: 48px/1 Georgia, serif; transform: translateY(7px); }
+blockquote { margin: 0; font-size: 15px; font-weight: 500; line-height: 1.65; }
+figcaption { margin-top: 7px; color: #003c24; font-size: 12px; font-weight: 600; }
+@keyframes pop {
+  0% { opacity: 0; transform: scale(.72); }
+  62% { opacity: 1; transform: scale(1.1); box-shadow: 0 0 17px 5px #96f0ff88; }
+  100% { opacity: 1; transform: scale(1); box-shadow: 0 0 0 0 #96f0ff00; }
+}
+@media (max-width: 550px) {
+  body { padding: 8px 10px; }
+  figure { grid-template-columns: 44px 1fr; column-gap: 12px; padding: 14px 12px; }
+  .icon { height: 44px; }
+  .icon span { font-size: 40px; transform: translateY(6px); }
+  blockquote { font-size: 13px; }
+}
+@media (prefers-reduced-motion: reduce) { .icon { animation: none; } }
+</style>
+<figure>
+  <span class="icon" aria-hidden="true"><span>“</span></span>
+  <blockquote>Het gezegde “verandering is de enige constante” geldt misschien wel nergens zo sterk als tijdens de jongvolwassenheid.</blockquote>
+  <figcaption>— Prof. Julie Yonkers</figcaption>
+</figure>
