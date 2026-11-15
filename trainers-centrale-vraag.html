@@ -6,7 +6,11 @@
 .wrap{padding:6px 10px;width:100%}
 .card{max-width:900px;margin:auto;background:#003c24;color:#fff;border-radius:12px;padding:13px 17px;display:flex;align-items:center;gap:12px;min-height:56px}
 .icon{width:29px;height:29px;flex:0 0 29px;border-radius:50%;background:#b8ffaf;color:#003c24;display:grid;place-items:center}
+.icon{animation:iconPop .65s cubic-bezier(.2,.9,.25,1.2) both,iconGlow 2.8s ease-in-out .7s infinite}
 .icon svg{width:17px;height:17px}
+@keyframes iconPop{0%{transform:scale(.6);opacity:0}70%{transform:scale(1.12);opacity:1}100%{transform:scale(1);opacity:1}}
+@keyframes iconGlow{0%,100%{box-shadow:0 0 0 0 rgba(184,255,175,.08)}50%{box-shadow:0 0 12px 4px rgba(184,255,175,.42)}}
+@media(prefers-reduced-motion:reduce){.icon{animation:none}}
 .label{font-size:10px;letter-spacing:.06em;font-weight:600;color:#b8ffaf;white-space:nowrap}
 .question{font-size:14px;line-height:1.45;font-weight:500;margin:0;min-width:0}
 @media(max-width:550px){.wrap{padding:5px 7px}.card{padding:12px;gap:9px}.label{font-size:9px}.question{font-size:12px}.icon{width:25px;height:25px;flex-basis:25px}.icon svg{width:15px;height:15px}}
