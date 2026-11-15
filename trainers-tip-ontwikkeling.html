@@ -1,16 +1,28 @@
 <!doctype html>
-<html lang="nl"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
-<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin><link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@500;600;700&display=swap" rel="stylesheet"><style>
-*{box-sizing:border-box}html,body{margin:0;background:transparent;font-family:Montserrat,Arial,sans-serif;color:#3e281a}
-.wrap{padding:12px 8px 18px;display:flex;align-items:flex-start;gap:15px}
-.tip{position:relative;border:2px solid #003c24;border-radius:50%;background:#b8ffaf;color:#003c24;width:58px;height:58px;flex:0 0 58px;display:grid;place-items:center;cursor:pointer;box-shadow:0 0 0 5px #b8ffaf55,0 0 22px 7px #b8ffafaa;animation:glow 2.8s ease-in-out infinite}
-.tip svg{width:29px;height:29px}.tip:focus-visible{outline:3px solid #ff4a00;outline-offset:5px}
-@keyframes glow{50%{box-shadow:0 0 0 7px #b8ffaf77,0 0 30px 12px #b8ffafdd}}
-.copy{flex:1;min-width:0}.heading{color:#003c24;font-weight:700;font-size:16px;line-height:1.4;margin:7px 0 5px}.detail{font-size:15px;line-height:1.6;margin:4px 0 0;max-width:650px}.hint{font-size:12px;color:#557060;margin:2px 0 0}.tip[aria-expanded=true]{animation:none}
-@media(prefers-reduced-motion:reduce){.tip{animation:none}}
-</style></head><body><div class="wrap"><button class="tip" id="tip" aria-label="Toon goed om te weten" aria-expanded="false" aria-controls="detail"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M9 18h6m-5 3h4M8.5 15.5C7 14.4 6 12.7 6 10.5a6 6 0 1 1 12 0c0 2.2-1 3.9-2.5 5L15 17H9l-.5-1.5Z"/><path d="M12 3V1m8 9h2M2 10h2M5 4 3.5 2.5M19 4l1.5-1.5"/></svg></button><div class="copy"><div class="heading">Goed om te weten</div><p class="hint" id="hint">Klik op het lampje voor de toelichting</p><p class="detail" id="detail" hidden>De leeftijdsgrenzen zijn richtlijnen, geen vaste regels. Jongeren ontwikkelen zich in hun eigen tempo. Ook hun ervaringen en omgeving spelen hierin een belangrijke rol.</p></div></div>
-<script>
-const b=document.getElementById('tip'),d=document.getElementById('detail'),h=document.getElementById('hint');
-function report(){try{parent.postMessage({type:'tip-height',height:document.documentElement.scrollHeight},'*')}catch(e){}}
-b.addEventListener('click',()=>{let open=b.getAttribute('aria-expanded')!=='true';b.setAttribute('aria-expanded',String(open));d.hidden=!open;h.hidden=open;report()});window.addEventListener('load',report);
-</script></body></html>
+<html lang="nl">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Goed om te weten</title>
+<style>
+@import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600&display=swap');
+*{box-sizing:border-box}
+html,body{margin:0;background:#fff;font-family:"Montserrat",Arial,sans-serif;color:#3e281a}
+.wrap{width:100%;padding:12px 18px;background:#fff}
+.tip{max-width:900px;margin:auto;display:flex;align-items:center;gap:18px;padding:17px 20px;background:#fff;border-left:5px solid #96f0ff;border-radius:0 14px 14px 0}
+.icon{flex:0 0 52px;width:52px;height:52px;border-radius:50%;background:#f1fdff;display:flex;align-items:center;justify-content:center;font-size:27px;position:relative;animation:pop .6s ease-out both,glow 2.2s ease-in-out .7s infinite}
+.icon::after{content:"";position:absolute;inset:-5px;border-radius:50%;box-shadow:0 0 0 0 rgba(255,196,0,.32);animation:halo 2.2s ease-in-out .7s infinite}
+.text{min-width:0}
+.label{margin:0 0 4px;color:#003c24;font-size:14px;font-weight:600}
+p{margin:0;font-size:13px;line-height:1.6}
+@keyframes pop{0%{transform:scale(.7);opacity:0}70%{transform:scale(1.08)}100%{transform:scale(1);opacity:1}}
+@keyframes glow{0%,100%{filter:drop-shadow(0 0 1px rgba(255,196,0,.15))}50%{filter:drop-shadow(0 0 9px rgba(255,196,0,.75))}}
+@keyframes halo{0%,100%{box-shadow:0 0 0 0 rgba(255,196,0,.05)}50%{box-shadow:0 0 18px 6px rgba(255,196,0,.20)}}
+@media(prefers-reduced-motion:reduce){.icon,.icon::after{animation:none}}
+@media(max-width:550px){.wrap{padding:8px 10px}.tip{gap:12px;padding:14px 12px}.icon{flex-basis:44px;width:44px;height:44px;font-size:23px}p{font-size:12px}}
+</style>
+</head>
+<body>
+<div class="wrap"><div class="tip"><div class="icon" aria-hidden="true">💡</div><div class="text"><div class="label">Goed om te weten</div><p>De leeftijdsgrenzen zijn richtlijnen, geen vaste regels. Jongeren ontwikkelen zich in hun eigen tempo. Ook hun ervaringen en omgeving spelen hierin een belangrijke rol.</p></div></div></div>
+</body>
+</html>
