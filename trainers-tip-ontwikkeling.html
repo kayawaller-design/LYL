@@ -1,0 +1,16 @@
+<!doctype html>
+<html lang="nl"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<style>
+*{box-sizing:border-box}html,body{margin:0;background:transparent;font-family:Arial,Helvetica,sans-serif;color:#263d36}
+.wrap{padding:12px 8px 18px;display:flex;align-items:flex-start;gap:15px}
+.tip{position:relative;border:1px solid #b4d5ae;border-radius:50%;background:#e5f5d8;color:#527d43;width:58px;height:58px;flex:0 0 58px;display:grid;place-items:center;cursor:pointer;box-shadow:0 0 0 5px #b9dca633,0 0 22px 7px #9ed58c80;animation:glow 2.8s ease-in-out infinite}
+.tip svg{width:29px;height:29px}.tip:focus-visible{outline:3px solid #6c9d5b;outline-offset:5px}
+@keyframes glow{50%{box-shadow:0 0 0 7px #b9dca655,0 0 30px 12px #9ed58caa}}
+.copy{flex:1;min-width:0}.heading{font-weight:700;font-size:16px;line-height:1.4;margin:7px 0 5px}.detail{font-size:15px;line-height:1.6;margin:4px 0 0;max-width:650px}.hint{font-size:12px;color:#6c8074;margin:2px 0 0}.tip[aria-expanded=true]{animation:none}
+@media(prefers-reduced-motion:reduce){.tip{animation:none}}
+</style></head><body><div class="wrap"><button class="tip" id="tip" aria-label="Toon goed om te weten" aria-expanded="false" aria-controls="detail"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M9 18h6m-5 3h4M8.5 15.5C7 14.4 6 12.7 6 10.5a6 6 0 1 1 12 0c0 2.2-1 3.9-2.5 5L15 17H9l-.5-1.5Z"/><path d="M12 3V1m8 9h2M2 10h2M5 4 3.5 2.5M19 4l1.5-1.5"/></svg></button><div class="copy"><div class="heading">Goed om te weten</div><p class="hint" id="hint">Klik op het lampje voor de toelichting</p><p class="detail" id="detail" hidden>De leeftijdsgrenzen zijn richtlijnen, geen vaste regels. Jongeren ontwikkelen zich in hun eigen tempo. Ook hun ervaringen en omgeving spelen hierin een belangrijke rol.</p></div></div>
+<script>
+const b=document.getElementById('tip'),d=document.getElementById('detail'),h=document.getElementById('hint');
+function report(){try{parent.postMessage({type:'tip-height',height:document.documentElement.scrollHeight},'*')}catch(e){}}
+b.addEventListener('click',()=>{let open=b.getAttribute('aria-expanded')!=='true';b.setAttribute('aria-expanded',String(open));d.hidden=!open;h.hidden=open;report()});window.addEventListener('load',report);
+</script></body></html>
