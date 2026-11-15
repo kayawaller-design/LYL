@@ -1,0 +1,31 @@
+<!doctype html>
+<html lang="nl">
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Tip over sociale druk</title>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600&display=swap">
+<style>
+*{box-sizing:border-box}
+body{margin:0;background:#fff;color:#3e281a;font-family:Montserrat,sans-serif}
+.wrap{width:100%;padding:12px 18px;background:#fff}
+.tip{max-width:900px;margin:auto;display:flex;align-items:center;gap:18px;padding:17px 20px;background:#fff;border-left:5px solid #96f0ff;border-radius:0 14px 14px 0}
+.icon{position:relative;flex:none;width:52px;height:52px;display:grid;place-items:center;border-radius:50%;background:#f1fdff;font-size:27px;animation:pop .6s ease-out both,glow 2.2s ease-in-out .7s infinite}
+.icon::after{content:"";position:absolute;inset:-5px;border-radius:50%;animation:halo 2.2s ease-in-out .7s infinite}
+.label{font-size:14px;font-weight:600;color:#003c24;margin:0 0 4px}
+p{font-size:13px;line-height:1.6;margin:0}
+@keyframes pop{0%{transform:scale(.7);opacity:0}70%{transform:scale(1.08)}100%{transform:scale(1);opacity:1}}
+@keyframes glow{0%,100%{filter:drop-shadow(0 0 1px rgba(255,196,0,.15))}50%{filter:drop-shadow(0 0 9px rgba(255,196,0,.75))}}
+@keyframes halo{0%,100%{box-shadow:0 0 0 0 rgba(255,196,0,.05)}50%{box-shadow:0 0 18px 6px rgba(255,196,0,.20)}}
+@media(max-width:550px){.wrap{padding:8px 10px}.tip{gap:12px;padding:14px 12px}.icon{width:44px;height:44px;font-size:23px}p{font-size:12px}}
+@media(prefers-reduced-motion:reduce){.icon,.icon::after{animation:none}}
+</style>
+<main class="wrap">
+  <aside class="tip" aria-labelledby="tip-label">
+    <span class="icon" aria-hidden="true">💡</span>
+    <div>
+      <h1 class="label" id="tip-label">Tip</h1>
+      <p>Wees je bewust van hoe je sociale druk in de groep opbouwt of verlaagt. Een beetje spanning kan jongeren uitdagen om te groeien, maar te veel druk kan hen juist terughoudend maken. Kies bewust wanneer je uitdaagt en wanneer je veiligheid biedt.</p>
+    </div>
+  </aside>
+</main>
+</html>
